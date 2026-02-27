@@ -1419,59 +1419,79 @@
       <!-- ── RIGHT SIDE: Flat earth model ── -->
       <text x="675" y="28" text-anchor="middle" fill="#44ff88" font-size="16" font-family="'Comic Sans MS',cursive" font-weight="bold">REALITY</text>
 
-      <!-- Flat earth disc (side view) -->
-      <rect x="545" y="250" width="260" height="18" rx="4" fill="#1a4466" stroke="#44aaff" stroke-width="1.5"/>
-      <!-- Earth layers -->
-      <rect x="548" y="252" width="254" height="5" rx="2" fill="#2d8a4e" opacity="0.5"/>
-      <text x="675" y="263" text-anchor="middle" fill="#88ccff" font-size="8" font-family="'Comic Sans MS',cursive">EARTH (DISC, SIDE VIEW)</text>
+      <!-- Ball that gets "dropped" — stays in place (inertia!) -->
+      <g id="gravDropBall" opacity="0">
+        <circle cx="600" cy="140" r="8" fill="#ffcc00" stroke="#fff" stroke-width="1.5"/>
+        <text x="600" y="128" text-anchor="middle" fill="#ffddaa" font-size="9" font-family="'Comic Sans MS',cursive" font-weight="bold">Ball (stationary)</text>
+      </g>
 
-      <!-- Person standing on disc -->
-      <circle cx="675" cy="226" r="7" fill="#ffcc00" stroke="#fff" stroke-width="1.5"/>
-      <line x1="675" y1="233" x2="675" y2="248" stroke="#ffcc00" stroke-width="2.5"/>
-      <line x1="675" y1="248" x2="667" y2="260" stroke="#ffcc00" stroke-width="2"/>
-      <line x1="675" y1="248" x2="683" y2="260" stroke="#ffcc00" stroke-width="2"/>
-      <line x1="675" y1="238" x2="664" y2="244" stroke="#ffcc00" stroke-width="2"/>
-      <line x1="675" y1="238" x2="686" y2="244" stroke="#ffcc00" stroke-width="2"/>
+      <!-- Hand that releases ball -->
+      <g id="gravHand" opacity="0">
+        <text x="600" y="110" text-anchor="middle" font-size="28">🤚</text>
+        <text x="600" y="92" text-anchor="middle" fill="#ffddaa" font-size="9" font-family="'Comic Sans MS',cursive">let go...</text>
+      </g>
 
-      <!-- Big upward acceleration arrows under the disc -->
-      <line x1="595" y1="340" x2="595" y2="278" stroke="#44ff88" stroke-width="3" marker-end="url(#arrowGreen)"/>
-      <line x1="635" y1="355" x2="635" y2="278" stroke="#44ff88" stroke-width="3" marker-end="url(#arrowGreen)"/>
-      <line x1="675" y1="365" x2="675" y2="278" stroke="#44ff88" stroke-width="4" marker-end="url(#arrowGreen)"/>
-      <line x1="715" y1="355" x2="715" y2="278" stroke="#44ff88" stroke-width="3" marker-end="url(#arrowGreen)"/>
-      <line x1="755" y1="340" x2="755" y2="278" stroke="#44ff88" stroke-width="3" marker-end="url(#arrowGreen)"/>
+      <!-- Disc + person + arrows group — this moves UP during animation -->
+      <g id="gravDiscGroup">
+        <!-- Flat earth disc (side view) -->
+        <rect x="545" y="250" width="260" height="18" rx="4" fill="#1a4466" stroke="#44aaff" stroke-width="1.5"/>
+        <rect x="548" y="252" width="254" height="5" rx="2" fill="#2d8a4e" opacity="0.5"/>
+        <text x="675" y="263" text-anchor="middle" fill="#88ccff" font-size="8" font-family="'Comic Sans MS',cursive">EARTH (DISC, SIDE VIEW)</text>
+
+        <!-- Person standing on disc -->
+        <circle cx="675" cy="226" r="7" fill="#ffcc00" stroke="#fff" stroke-width="1.5"/>
+        <line x1="675" y1="233" x2="675" y2="248" stroke="#ffcc00" stroke-width="2.5"/>
+        <line x1="675" y1="248" x2="667" y2="260" stroke="#ffcc00" stroke-width="2"/>
+        <line x1="675" y1="248" x2="683" y2="260" stroke="#ffcc00" stroke-width="2"/>
+        <line x1="675" y1="238" x2="664" y2="244" stroke="#ffcc00" stroke-width="2"/>
+        <line x1="675" y1="238" x2="686" y2="244" stroke="#ffcc00" stroke-width="2"/>
+
+        <!-- Big upward acceleration arrows under the disc -->
+        <line x1="595" y1="340" x2="595" y2="278" stroke="#44ff88" stroke-width="3" marker-end="url(#arrowGreen)"/>
+        <line x1="635" y1="355" x2="635" y2="278" stroke="#44ff88" stroke-width="3" marker-end="url(#arrowGreen)"/>
+        <line x1="675" y1="365" x2="675" y2="278" stroke="#44ff88" stroke-width="4" marker-end="url(#arrowGreen)"/>
+        <line x1="715" y1="355" x2="715" y2="278" stroke="#44ff88" stroke-width="3" marker-end="url(#arrowGreen)"/>
+        <line x1="755" y1="340" x2="755" y2="278" stroke="#44ff88" stroke-width="3" marker-end="url(#arrowGreen)"/>
+
+        <!-- Animate disc group moving UP (disc rises to meet the ball) -->
+        <animateTransform id="gravDiscAnim" attributeName="transform" type="translate"
+          values="0,0; 0,0; 0,-105" keyTimes="0; 0.15; 1" dur="2s"
+          begin="indefinite" fill="freeze" calcMode="spline"
+          keySplines="0 0 1 1; 0.4 0 1 1"/>
+      </g>
+
+      <!-- "BONK" label after collision -->
+      <g id="gravBonk" opacity="0">
+        <text x="630" y="145" text-anchor="middle" fill="#ff4444" font-size="18" font-family="'Comic Sans MS',cursive" font-weight="bold">BONK! 💥</text>
+      </g>
 
       <!-- Acceleration label -->
       <text class="svg-step" id="gravAccel" x="675" y="385" text-anchor="middle" fill="#44ff88" font-size="15" font-family="'Comic Sans MS',cursive" font-weight="bold">a = 9.81 m/s² ⬆️</text>
 
-      <!-- Dropped object animation area -->
-      <circle class="svg-step" id="gravBall" cx="600" cy="185" r="6" fill="#ffcc00" stroke="#fff" stroke-width="1"/>
-      <text class="svg-step" id="gravBallLabel" x="612" y="183" fill="#ffddaa" font-size="9" font-family="'Comic Sans MS',cursive">Ball "falls"</text>
-      <text class="svg-step" id="gravBallLabel2" x="612" y="196" fill="#ffddaa" font-size="9" font-family="'Comic Sans MS',cursive">(disc rises to meet it)</text>
-
-      <!-- Speed indicator -->
-      <text class="svg-step" id="gravSpeed" x="675" y="210" text-anchor="middle" fill="#88ffaa" font-size="10" font-family="'Comic Sans MS',cursive">The disc pushes up → you feel "weight"</text>
+      <!-- Explanation after animation -->
+      <text class="svg-step" id="gravExplain" x="675" y="210" text-anchor="middle" fill="#88ffaa" font-size="11" font-family="'Comic Sans MS',cursive">Ball didn't fall — disc rose to meet it!</text>
     </svg>
   </div>
 
   <div style="display:flex;gap:16px;justify-content:center;margin-top:8px">
-    <div class="evidence-card red" data-step="4" style="max-width:320px;padding:10px 14px">
+    <div class="evidence-card red" data-step="5" style="max-width:320px;padding:10px 14px">
       <h3 style="color:#ff4444;font-size:0.9em;margin-bottom:4px">❌ Their "Gravity"</h3>
       <p style="font-size:0.82em">An invisible force that magically pulls everything toward the centre of a ball.</p>
       <p style="font-size:0.82em;margin-top:3px">Nobody has <span class="highlight-red">ever seen, measured, or isolated</span> a graviton.</p>
     </div>
-    <div class="evidence-card green" data-step="5" style="max-width:320px;padding:10px 14px">
+    <div class="evidence-card green" data-step="6" style="max-width:320px;padding:10px 14px">
       <h3 style="color:#44ff88;font-size:0.9em;margin-bottom:4px">✅ Universal Acceleration</h3>
       <p style="font-size:0.82em">The flat Earth disc accelerates upward at <span class="highlight">9.81 m/s²</span>.</p>
       <p style="font-size:0.82em;margin-top:3px">Objects don't fall <em>down</em> — the Earth rushes <em>up</em> to meet them. Same observable result. Simpler model.</p>
     </div>
-    <div class="evidence-card" data-step="6" style="max-width:320px;padding:10px 14px;border-left-color:#ffcc00">
+    <div class="evidence-card" data-step="7" style="max-width:320px;padding:10px 14px;border-left-color:#ffcc00">
       <h3 style="color:#ffcc00;font-size:0.9em;margin-bottom:4px">📐 The Math Checks Out</h3>
       <p style="font-size:0.82em">Einstein's own relativity allows for <span class="highlight">constant acceleration</span> without exceeding the speed of light.</p>
       <p style="font-size:0.82em;margin-top:3px">After billions of years: still below <em>c</em>. Relativistic mass increase handles the rest.</p>
     </div>
   </div>
 
-  <div class="conclusion-banner green" data-step="7">Gravity is just the floor hitting you. ⬆️</div>
+  <div class="conclusion-banner green" data-step="8">Gravity is just the floor hitting you. ⬆️</div>
 </div>
 
 <!-- ═══ NAV ═══ -->
@@ -1581,10 +1601,23 @@
     '9-7': function() {
       ['fpActual2g','fpActLabel2g','fpFlatRoute2','fpFlatLabel2'].forEach(id => document.getElementById(id).classList.add('revealed'));
     },
-    // slide 10 (gravity), step 3 = reveal acceleration details
+    // slide 10 (gravity), step 3 = show hand holding ball + accel label
     '10-3': function() {
-      ['gravAccel','gravBall','gravBallLabel','gravBallLabel2','gravSpeed'].forEach(id =>
-        document.getElementById(id).classList.add('revealed'));
+      document.getElementById('gravAccel').classList.add('revealed');
+      document.getElementById('gravHand').setAttribute('opacity', '1');
+      document.getElementById('gravDropBall').setAttribute('opacity', '1');
+    },
+    // slide 10 (gravity), step 4 = trigger drop animation (replaces old step 4 evidence card)
+    '10-4': function() {
+      // Hide hand (let go)
+      document.getElementById('gravHand').setAttribute('opacity', '0');
+      // Animate disc rising up
+      document.getElementById('gravDiscAnim').beginElement();
+      // Show BONK after disc reaches ball
+      setTimeout(() => {
+        document.getElementById('gravBonk').setAttribute('opacity', '1');
+        document.getElementById('gravExplain').classList.add('revealed');
+      }, 1800);
     }
   };
 
@@ -1691,8 +1724,16 @@
         ['fpActual2g','fpActLabel2g','fpFlatRoute2','fpFlatLabel2'].forEach(id => document.getElementById(id).classList.remove('revealed'));
       }
       if (currentSlide === 10 && currentStep === 3) {
-        ['gravAccel','gravBall','gravBallLabel','gravBallLabel2','gravSpeed'].forEach(id =>
-          document.getElementById(id).classList.remove('revealed'));
+        document.getElementById('gravAccel').classList.remove('revealed');
+        document.getElementById('gravHand').setAttribute('opacity', '0');
+        document.getElementById('gravDropBall').setAttribute('opacity', '0');
+      }
+      if (currentSlide === 10 && currentStep === 4) {
+        document.getElementById('gravHand').setAttribute('opacity', '1');
+        document.getElementById('gravBonk').setAttribute('opacity', '0');
+        document.getElementById('gravExplain').classList.remove('revealed');
+        // Reset disc position
+        document.getElementById('gravDiscGroup').removeAttribute('transform');
       }
       currentStep--;
       revealUpTo(slide, currentStep);
