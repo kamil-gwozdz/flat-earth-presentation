@@ -552,7 +552,7 @@
 
 </style>
 </head>
-<body>
+<body tabindex="0" style="outline:none">
 
 <!-- ═══ SLIDE 1: TITLE ═══ -->
 <div class="slide slide-1 active" data-slide="1">
@@ -1599,10 +1599,16 @@
     if (e.key === 'ArrowLeft') { e.preventDefault(); goBack(); }
   });
 
+  // Click left half = back, right half = forward, but ignore if on slide 0 step 0 going back
   document.addEventListener('click', e => {
+    // Ignore clicks on links/buttons
+    if (e.target.closest('a, button')) return;
     if (e.clientX > window.innerWidth / 2) advance();
-    else goBack();
+    else if (currentSlide > 0 || currentStep > 0) goBack();
   });
+
+  // Ensure keyboard works immediately on page load
+  document.body.focus();
 
   updateCounter();
 </script>
