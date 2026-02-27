@@ -623,8 +623,73 @@
   </div>
 </div>
 
-<!-- ═══ SLIDE 2: SPEED CALCULATION ═══ -->
-<div class="slide slide-calc" data-slide="2">
+<!-- ═══ SLIDE 2: BEDFORD LEVEL ═══ -->
+<div class="slide slide-dark" data-slide="2">
+  <h2 data-step="1">🔬 The Bedford Level Experiment (1838)</h2>
+  <div class="slide-subtitle" data-step="2">The experiment that started it all</div>
+
+  <div data-step="3" style="text-align:center">
+    <svg viewBox="0 0 900 260" width="900" height="260">
+      <!-- canal water -->
+      <rect x="50" y="160" width="800" height="40" rx="2" fill="#1a4466" opacity="0.6"/>
+      <line x1="50" y1="160" x2="850" y2="160" stroke="#4488aa" stroke-width="1.5"/>
+      <!-- canal banks -->
+      <rect x="50" y="200" width="800" height="20" fill="#3a5a2a"/>
+      <!-- distance markers -->
+      <text x="50" y="235" fill="#888" font-size="10" font-family="'Comic Sans MS',cursive">0 km</text>
+      <text x="250" y="235" fill="#888" font-size="10" font-family="'Comic Sans MS',cursive">2.4 km</text>
+      <text x="450" y="235" fill="#888" font-size="10" font-family="'Comic Sans MS',cursive">4.8 km</text>
+      <text x="650" y="235" fill="#888" font-size="10" font-family="'Comic Sans MS',cursive">7.2 km</text>
+      <text x="830" y="235" fill="#888" font-size="10" font-family="'Comic Sans MS',cursive">9.7 km</text>
+
+      <!-- Observer with telescope -->
+      <g>
+        <rect x="55" y="130" width="6" height="30" fill="#cc9933"/><!-- pole -->
+        <circle cx="58" cy="125" r="8" fill="#ffcc66"/><!-- head -->
+        <line x1="66" y1="128" x2="90" y2="128" stroke="#888" stroke-width="3"/><!-- telescope -->
+        <circle cx="90" cy="128" r="4" fill="#aaa" stroke="#888" stroke-width="1"/>
+        <text x="58" y="112" text-anchor="middle" fill="#ffcc00" font-size="10" font-family="'Comic Sans MS',cursive" font-weight="bold">Observer</text>
+      </g>
+
+      <!-- Target flag at far end -->
+      <g>
+        <line x1="840" y1="115" x2="840" y2="160" stroke="#cc9933" stroke-width="3"/>
+        <rect x="840" y="115" width="25" height="16" fill="#ff4444"/>
+        <text x="840" y="108" text-anchor="middle" fill="#ff4444" font-size="10" font-family="'Comic Sans MS',cursive" font-weight="bold">Flag (9.7 km away)</text>
+      </g>
+
+      <!-- Sight line (straight!) -->
+      <line x1="90" y1="128" x2="840" y2="128" stroke="#ffcc0066" stroke-width="1.5" stroke-dasharray="8,4" class="svg-step" id="sightLine"/>
+
+      <!-- "Expected" curvature of Earth's surface (if globe) — surface drops away from observer -->
+      <path d="M 90,160 Q 450,110 840,160" fill="none" stroke="#ff4444" stroke-width="2.5" stroke-dasharray="6,4" class="svg-step" id="expectedCurve"/>
+      <text x="450" y="98" text-anchor="middle" fill="#ff4444" font-size="11" font-family="'Comic Sans MS',cursive" class="svg-step" id="curveLabel">Expected curvature on a "globe" — flag hidden behind ~7.4m bulge ↑</text>
+
+      <!-- Same height labels -->
+      <line x1="50" y1="128" x2="850" y2="128" stroke="#44ff4422" stroke-width="1" class="svg-step" id="sameHeight"/>
+      <text x="450" y="52" text-anchor="middle" fill="#44ff44" font-size="14" font-family="'Comic Sans MS',cursive" font-weight="bold" class="svg-step" id="resultLabel">Flag visible at SAME HEIGHT! ✓</text>
+    </svg>
+  </div>
+
+  <div style="display:flex;gap:20px;justify-content:center;max-width:900px;margin:0 auto">
+    <div class="evidence-card" data-step="4" style="flex:1">
+      <h3 style="color:#ffcc00">📐 The Math</h3>
+      <p>Over 9.7 km, Earth's curvature should cause a drop of <span class="highlight">~7.4 metres</span>.</p>
+      <p style="margin-top:8px">The flag was mounted 1.5m above water. It should be <span class="highlight-red">completely hidden</span> behind the curve.</p>
+    </div>
+
+    <div class="evidence-card green" data-step="5" style="flex:1">
+      <h3 style="color:#44ff44">🔭 The Result</h3>
+      <p>Samuel Rowbotham observed the flag at <span class="highlight">full height</span> across the entire 9.7 km canal.</p>
+      <p style="margin-top:8px;color:#88ff88">No curvature detected. Zero. None. Nada. 🎯</p>
+    </div>
+  </div>
+
+  <div class="conclusion-banner gold" data-step="6">Repeatable. Observable. Undeniable. 🔬</div>
+</div>
+
+<!-- ═══ SLIDE 3: SPEED CALCULATION ═══ -->
+<div class="slide slide-calc" data-slide="3">
   <h2 data-step="1">🌍 How Fast Is Earth "Supposedly" Spinning?</h2>
 
   <div class="calc-layout">
@@ -707,8 +772,8 @@
   </div>
 </div>
 
-<!-- ═══ SLIDE 3: JUMP TEST ═══ -->
-<div class="slide slide-2" data-slide="3">
+<!-- ═══ SLIDE 4: JUMP TEST ═══ -->
+<div class="slide slide-2" data-slide="4">
   <h2 data-step="1">⚠️ The Jump Test ⚠️</h2>
   <div class="jt-subtitle" data-step="2">IF EARTH SPINS AT 1,670 KM/H...</div>
   <div class="jt-container" data-step="3">
@@ -834,8 +899,8 @@
   <div class="jt-bottom-text" data-step="6">🏆 FLAT EARTH CONFIRMED 🏆</div>
 </div>
 
-<!-- ═══ SLIDE 4: WATER LEVEL ═══ -->
-<div class="slide slide-dark" data-slide="4">
+<!-- ═══ SLIDE 5: WATER LEVEL ═══ -->
+<div class="slide slide-dark" data-slide="5">
   <h2 data-step="1">💧 Water Always Finds Its Level</h2>
   <div class="slide-subtitle" data-step="2">A simple experiment anyone can do at home</div>
 
@@ -875,8 +940,8 @@
   <div class="conclusion-banner red" data-step="5">Water doesn't stick to a spinning ball. Period. 💧</div>
 </div>
 
-<!-- ═══ SLIDE 5: HORIZON ═══ -->
-<div class="slide slide-dark" data-slide="5">
+<!-- ═══ SLIDE 6: HORIZON ═══ -->
+<div class="slide slide-dark" data-slide="6">
   <h2 data-step="1">🌅 The Horizon Is Always Flat</h2>
   <div class="slide-subtitle" data-step="2">No matter how high you go...</div>
 
@@ -935,8 +1000,8 @@
   <div class="conclusion-banner red" data-step="5">Where's the curve? 🔍</div>
 </div>
 
-<!-- ═══ SLIDE 6: HORIZON EXHIBITS ═══ -->
-<div class="slide slide-dark" data-slide="6">
+<!-- ═══ SLIDE 7: HORIZON EXHIBITS ═══ -->
+<div class="slide slide-dark" data-slide="7">
   <h2 data-step="1">📸 Photographic Evidence</h2>
   <div class="slide-subtitle" data-step="2">Real, unedited photographs. No fisheye lenses. No CGI.</div>
 
@@ -976,8 +1041,8 @@
   <div class="conclusion-banner gold" data-step="9">6 exhibits. 0 curvature. Case closed. 📸</div>
 </div>
 
-<!-- ═══ SLIDE 7: PILOTS ═══ -->
-<div class="slide slide-dark" data-slide="7">
+<!-- ═══ SLIDE 8: PILOTS ═══ -->
+<div class="slide slide-dark" data-slide="8">
   <h2 data-step="1">✈️ Pilots Never Adjust The Nose Down</h2>
   <div class="slide-subtitle" data-step="2">If Earth curves, planes would fly into space</div>
 
@@ -1038,8 +1103,8 @@
   <div class="conclusion-banner red" data-step="5">No curve correction needed = no curve. ✈️</div>
 </div>
 
-<!-- ═══ SLIDE 8: INSTITUTIONAL PROOF ═══ -->
-<div class="slide slide-dark" data-slide="8">
+<!-- ═══ SLIDE 9: INSTITUTIONAL PROOF ═══ -->
+<div class="slide slide-dark" data-slide="9">
   <h2 data-step="1">🏛️ They're Telling Us In Plain Sight</h2>
   <div class="slide-subtitle" data-step="2">The institutions KNOW — and they're not even hiding it</div>
 
@@ -1116,8 +1181,8 @@
   </div>
 </div>
 
-<!-- ═══ SLIDE 9: FLIGHT PATHS ═══ -->
-<div class="slide slide-dark" data-slide="9">
+<!-- ═══ SLIDE 10: FLIGHT PATHS ═══ -->
+<div class="slide slide-dark" data-slide="10">
   <h2 data-step="1">🛩️ Flight Path Anomalies</h2>
   <div class="slide-subtitle" data-step="2">Routes that make NO sense on a globe...</div>
 
@@ -1298,71 +1363,6 @@
   <div class="conclusion-banner red" data-step="8">Flight paths only make sense on a flat map. 🗺️</div>
 </div>
 
-<!-- ═══ SLIDE 10: BEDFORD LEVEL ═══ -->
-<div class="slide slide-dark" data-slide="10">
-  <h2 data-step="1">🔬 The Bedford Level Experiment (1838)</h2>
-  <div class="slide-subtitle" data-step="2">The experiment that started it all</div>
-
-  <div data-step="3" style="text-align:center">
-    <svg viewBox="0 0 900 260" width="900" height="260">
-      <!-- canal water -->
-      <rect x="50" y="160" width="800" height="40" rx="2" fill="#1a4466" opacity="0.6"/>
-      <line x1="50" y1="160" x2="850" y2="160" stroke="#4488aa" stroke-width="1.5"/>
-      <!-- canal banks -->
-      <rect x="50" y="200" width="800" height="20" fill="#3a5a2a"/>
-      <!-- distance markers -->
-      <text x="50" y="235" fill="#888" font-size="10" font-family="'Comic Sans MS',cursive">0 km</text>
-      <text x="250" y="235" fill="#888" font-size="10" font-family="'Comic Sans MS',cursive">2.4 km</text>
-      <text x="450" y="235" fill="#888" font-size="10" font-family="'Comic Sans MS',cursive">4.8 km</text>
-      <text x="650" y="235" fill="#888" font-size="10" font-family="'Comic Sans MS',cursive">7.2 km</text>
-      <text x="830" y="235" fill="#888" font-size="10" font-family="'Comic Sans MS',cursive">9.7 km</text>
-
-      <!-- Observer with telescope -->
-      <g>
-        <rect x="55" y="130" width="6" height="30" fill="#cc9933"/><!-- pole -->
-        <circle cx="58" cy="125" r="8" fill="#ffcc66"/><!-- head -->
-        <line x1="66" y1="128" x2="90" y2="128" stroke="#888" stroke-width="3"/><!-- telescope -->
-        <circle cx="90" cy="128" r="4" fill="#aaa" stroke="#888" stroke-width="1"/>
-        <text x="58" y="112" text-anchor="middle" fill="#ffcc00" font-size="10" font-family="'Comic Sans MS',cursive" font-weight="bold">Observer</text>
-      </g>
-
-      <!-- Target flag at far end -->
-      <g>
-        <line x1="840" y1="115" x2="840" y2="160" stroke="#cc9933" stroke-width="3"/>
-        <rect x="840" y="115" width="25" height="16" fill="#ff4444"/>
-        <text x="840" y="108" text-anchor="middle" fill="#ff4444" font-size="10" font-family="'Comic Sans MS',cursive" font-weight="bold">Flag (9.7 km away)</text>
-      </g>
-
-      <!-- Sight line (straight!) -->
-      <line x1="90" y1="128" x2="840" y2="128" stroke="#ffcc0066" stroke-width="1.5" stroke-dasharray="8,4" class="svg-step" id="sightLine"/>
-
-      <!-- "Expected" curve (if globe) -->
-      <path d="M 90,128 Q 450,155 840,128" fill="none" stroke="#ff444466" stroke-width="2" stroke-dasharray="6,4" class="svg-step" id="expectedCurve"/>
-      <text x="450" y="175" text-anchor="middle" fill="#ff4444" font-size="11" font-family="'Comic Sans MS',cursive" class="svg-step" id="curveLabel">Expected drop on "globe": ~7.4m ↓</text>
-
-      <!-- Same height labels -->
-      <line x1="50" y1="128" x2="850" y2="128" stroke="#44ff4422" stroke-width="1" class="svg-step" id="sameHeight"/>
-      <text x="450" y="52" text-anchor="middle" fill="#44ff44" font-size="14" font-family="'Comic Sans MS',cursive" font-weight="bold" class="svg-step" id="resultLabel">Flag visible at SAME HEIGHT! ✓</text>
-    </svg>
-  </div>
-
-  <div style="display:flex;gap:20px;justify-content:center;max-width:900px;margin:0 auto">
-    <div class="evidence-card" data-step="4" style="flex:1">
-      <h3 style="color:#ffcc00">📐 The Math</h3>
-      <p>Over 9.7 km, Earth's curvature should cause a drop of <span class="highlight">~7.4 metres</span>.</p>
-      <p style="margin-top:8px">The flag was mounted 1.5m above water. It should be <span class="highlight-red">completely hidden</span> behind the curve.</p>
-    </div>
-
-    <div class="evidence-card green" data-step="5" style="flex:1">
-      <h3 style="color:#44ff44">🔭 The Result</h3>
-      <p>Samuel Rowbotham observed the flag at <span class="highlight">full height</span> across the entire 9.7 km canal.</p>
-      <p style="margin-top:8px;color:#88ff88">No curvature detected. Zero. None. Nada. 🎯</p>
-    </div>
-  </div>
-
-  <div class="conclusion-banner gold" data-step="6">Repeatable. Observable. Undeniable. 🔬</div>
-</div>
-
 <!-- ═══ SLIDE 11: GRAVITY — UNIVERSAL ACCELERATION ═══ -->
 <div class="slide slide-dark" data-slide="11">
   <h2 data-step="1">⬇️ What About Gravity?</h2>
@@ -1509,36 +1509,45 @@
 
   // Custom step handlers for SVG animations
   const stepHandlers = {
-    // slide 1 (speed calc), step 2 = start earth spinning
-    '1-2': function() {
+    // slide 1 (bedford), step 4 = show sight line & expected curve
+    '1-4': function() {
+      ['sightLine','expectedCurve','curveLabel'].forEach(id =>
+        document.getElementById(id).classList.add('revealed'));
+    },
+    '1-5': function() {
+      ['sameHeight','resultLabel'].forEach(id =>
+        document.getElementById(id).classList.add('revealed'));
+    },
+    // slide 2 (speed calc), step 2 = start earth spinning
+    '2-2': function() {
       document.getElementById('earthSpin').classList.remove('paused');
       document.getElementById('spinArrowG').classList.add('revealed');
     },
-    '1-4': function() {
+    '2-4': function() {
       document.getElementById('berlinLatLine').classList.add('revealed');
       document.getElementById('berlinLatLabel').classList.add('revealed');
     },
-    // slide 2 (jump test), step 4 = trigger jump
-    '2-4': function() {
+    // slide 3 (jump test), step 4 = trigger jump
+    '3-4': function() {
       ['groundMove','leftJump','mouthAnim','armL1','armL2','armR1','armR2','legL','legR','rightJump']
         .forEach(id => { const el = document.getElementById(id); if (el) el.beginElement(); });
       document.getElementById('leftSpeed').classList.add('revealed');
       document.getElementById('rightSpeed').classList.add('revealed');
       document.getElementById('leftArrow').classList.add('revealed');
     },
-    '2-5': function() {
+    '3-5': function() {
       document.getElementById('leftLanding').classList.add('revealed');
       document.getElementById('rightLanding').classList.add('revealed');
     },
-    // slide 3 (water level), step 4 = trigger water animations
-    '3-4': function() {
+    // slide 4 (water level), step 4 = trigger water animations
+    '4-4': function() {
       ['wd1','wd2','wd3','wd4'].forEach(id => document.getElementById(id).classList.add('animate'));
       document.getElementById('waterFlat').classList.add('animate');
       ['waterQ','waterQ2','waterLabel1','levelLine','levelLabel','waterLabel2'].forEach(id =>
         document.getElementById(id).classList.add('revealed'));
     },
-    // slide 6 (pilots), step 3 = trigger plane animations
-    '6-3': function() {
+    // slide 7 (pilots), step 3 = trigger plane animations
+    '7-3': function() {
       const gp = document.getElementById('globePlaneAnim');
       const fp = document.getElementById('flatPlaneAnim');
       if (gp) gp.beginElement();
@@ -1549,37 +1558,28 @@
         document.getElementById('intoSpaceLabel').classList.add('revealed');
       }, 3200);
     },
-    // slide 7 (institutional proof), step 4 = zoom UN flag, step 5 = morph to flat earth
-    '7-4': function() {
+    // slide 8 (institutional proof), step 4 = zoom UN flag, step 5 = morph to flat earth
+    '8-4': function() {
       const o = document.getElementById('unOverlay');
       o.classList.add('active');
       setTimeout(() => o.classList.add('zoomed'), 50);
     },
-    '7-5': function() {
+    '8-5': function() {
       document.getElementById('unOverlay').classList.add('morphed');
     },
-    '7-6': function() {
+    '8-6': function() {
       const o = document.getElementById('unOverlay');
       o.classList.remove('active','zoomed','morphed');
     },
-    // slide 8 (flight paths), step 4 = show expected route on globe
-    '8-4': function() {
+    // slide 9 (flight paths), step 4 = show expected route on globe
+    '9-4': function() {
       ['fpExpected1','fpExpLabel1'].forEach(id => document.getElementById(id).classList.add('revealed'));
     },
-    '8-5': function() {
+    '9-5': function() {
       ['fpActual1g','fpActLabel1g','fpFlatRoute1','fpFlatLabel1'].forEach(id => document.getElementById(id).classList.add('revealed'));
     },
-    '8-7': function() {
+    '9-7': function() {
       ['fpActual2g','fpActLabel2g','fpFlatRoute2','fpFlatLabel2'].forEach(id => document.getElementById(id).classList.add('revealed'));
-    },
-    // slide 9 (bedford), step 4 = show sight line & expected curve
-    '9-4': function() {
-      ['sightLine','expectedCurve','curveLabel'].forEach(id =>
-        document.getElementById(id).classList.add('revealed'));
-    },
-    '9-5': function() {
-      ['sameHeight','resultLabel'].forEach(id =>
-        document.getElementById(id).classList.add('revealed'));
     },
     // slide 10 (gravity), step 3 = reveal acceleration details
     '10-3': function() {
@@ -1638,58 +1638,57 @@
     if (currentStep > 0) {
       const slide = slides[currentSlide];
       // undo svg steps per slide
-      if (currentSlide === 1 && currentStep === 2) {
+      if (currentSlide === 1 && currentStep === 4) {
+        ['sightLine','expectedCurve','curveLabel'].forEach(id => document.getElementById(id).classList.remove('revealed'));
+      }
+      if (currentSlide === 1 && currentStep === 5) {
+        ['sameHeight','resultLabel'].forEach(id => document.getElementById(id).classList.remove('revealed'));
+      }
+      if (currentSlide === 2 && currentStep === 2) {
         document.getElementById('earthSpin').classList.add('paused');
         document.getElementById('spinArrowG').classList.remove('revealed');
       }
-      if (currentSlide === 1 && currentStep === 4) {
+      if (currentSlide === 2 && currentStep === 4) {
         document.getElementById('berlinLatLine').classList.remove('revealed');
         document.getElementById('berlinLatLabel').classList.remove('revealed');
       }
-      if (currentSlide === 2 && currentStep === 4) {
+      if (currentSlide === 3 && currentStep === 4) {
         document.getElementById('leftSpeed').classList.remove('revealed');
         document.getElementById('rightSpeed').classList.remove('revealed');
         document.getElementById('leftArrow').classList.remove('revealed');
       }
-      if (currentSlide === 2 && currentStep === 5) {
+      if (currentSlide === 3 && currentStep === 5) {
         document.getElementById('leftLanding').classList.remove('revealed');
         document.getElementById('rightLanding').classList.remove('revealed');
       }
-      if (currentSlide === 3 && currentStep === 4) {
+      if (currentSlide === 4 && currentStep === 4) {
         ['wd1','wd2','wd3','wd4'].forEach(id => document.getElementById(id).classList.remove('animate'));
         document.getElementById('waterFlat').classList.remove('animate');
         ['waterQ','waterQ2','waterLabel1','levelLine','levelLabel','waterLabel2'].forEach(id =>
           document.getElementById(id).classList.remove('revealed'));
       }
-      if (currentSlide === 6 && currentStep === 3) {
+      if (currentSlide === 7 && currentStep === 3) {
         document.getElementById('intoSpaceLabel').classList.remove('revealed');
         document.getElementById('altitudeLines').classList.remove('revealed');
       }
-      if (currentSlide === 7 && currentStep === 4) {
+      if (currentSlide === 8 && currentStep === 4) {
         document.getElementById('unOverlay').classList.remove('active','zoomed','morphed');
       }
-      if (currentSlide === 7 && currentStep === 5) {
+      if (currentSlide === 8 && currentStep === 5) {
         document.getElementById('unOverlay').classList.remove('morphed');
       }
-      if (currentSlide === 7 && currentStep === 6) {
-        // re-show the overlay in morphed state when going back to step 5
+      if (currentSlide === 8 && currentStep === 6) {
         const o = document.getElementById('unOverlay');
         o.classList.add('active','zoomed','morphed');
       }
-      if (currentSlide === 8 && currentStep === 4) {
+      if (currentSlide === 9 && currentStep === 4) {
         ['fpExpected1','fpExpLabel1'].forEach(id => document.getElementById(id).classList.remove('revealed'));
       }
-      if (currentSlide === 8 && currentStep === 5) {
+      if (currentSlide === 9 && currentStep === 5) {
         ['fpActual1g','fpActLabel1g','fpFlatRoute1','fpFlatLabel1'].forEach(id => document.getElementById(id).classList.remove('revealed'));
       }
-      if (currentSlide === 8 && currentStep === 7) {
+      if (currentSlide === 9 && currentStep === 7) {
         ['fpActual2g','fpActLabel2g','fpFlatRoute2','fpFlatLabel2'].forEach(id => document.getElementById(id).classList.remove('revealed'));
-      }
-      if (currentSlide === 9 && currentStep === 4) {
-        ['sightLine','expectedCurve','curveLabel'].forEach(id => document.getElementById(id).classList.remove('revealed'));
-      }
-      if (currentSlide === 9 && currentStep === 5) {
-        ['sameHeight','resultLabel'].forEach(id => document.getElementById(id).classList.remove('revealed'));
       }
       if (currentSlide === 10 && currentStep === 3) {
         ['gravAccel','gravBall','gravBallLabel','gravBallLabel2','gravSpeed'].forEach(id =>
