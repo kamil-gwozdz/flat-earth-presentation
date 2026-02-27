@@ -592,9 +592,144 @@
     animation-play-state: paused;
   }
 
+  /* ══════════════════════════════════════
+     MOBILE — portrait rotate warning
+     ══════════════════════════════════════ */
+  .rotate-warning {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #0a0a2e;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+    padding: 40px;
+  }
+  .rotate-warning .phone-icon {
+    font-size: 5em;
+    animation: rotatePhone 2s ease-in-out infinite;
+  }
+  @keyframes rotatePhone {
+    0%, 100% { transform: rotate(0deg); }
+    30%, 70% { transform: rotate(90deg); }
+  }
+  .rotate-warning h2 {
+    font-size: 1.6em;
+    color: #ffcc00;
+    font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+  }
+  .rotate-warning p {
+    font-size: 1em;
+    color: #aaa;
+    font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+  }
+
+  /* ── Mobile nav arrows ── */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    pointer-events: none;
+  }
+  .mobile-nav button {
+    position: fixed;
+    bottom: 12px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid #ffffff44;
+    background: rgba(10,10,46,0.7);
+    color: #fff;
+    font-size: 1.6em;
+    pointer-events: auto;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: background 0.15s, border-color 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+  }
+  .mobile-nav button:active {
+    background: rgba(255,204,0,0.25);
+    border-color: #ffcc00;
+  }
+  .mobile-nav .nav-prev { left: 16px; }
+  .mobile-nav .nav-next { right: 16px; }
+
+  /* Show portrait warning & nav only on small touch devices */
+  @media (max-width: 1024px) and (hover: none) {
+    .mobile-nav { display: block; }
+    .nav-hint { display: none; }
+  }
+  @media (max-width: 1024px) and (hover: none) and (orientation: portrait) {
+    .rotate-warning { display: flex !important; }
+    .slide { display: none !important; }
+    .slide-counter, .nav-hint, .mobile-nav { display: none !important; }
+  }
+
+  /* ── Mobile landscape scaling ── */
+  @media (max-height: 500px) and (hover: none),
+         (max-width: 1024px) and (hover: none) and (orientation: landscape) {
+    .slide-dark { padding: 16px 24px; }
+    .slide-dark h2 { font-size: 1.3em; margin-bottom: 8px; }
+    .slide-dark .slide-subtitle { font-size: 0.75em; margin-bottom: 10px; }
+    .main-title { font-size: 2.2em; margin-bottom: 8px; }
+    .subtitle { font-size: 0.9em; margin-bottom: 16px; }
+    .top-label { font-size: 0.85em; margin-bottom: 6px; }
+    .author-line { font-size: 0.75em; }
+    .stamp { font-size: 0.8em; margin-top: 14px; padding: 5px 16px; }
+    .evidence-card { padding: 10px 14px; margin-bottom: 8px; }
+    .evidence-card h3 { font-size: 0.95em; }
+    .evidence-card p { font-size: 0.75em; line-height: 1.3; }
+    .conclusion-banner { font-size: 1em; margin-top: 8px; }
+    .evidence-grid { gap: 8px; }
+    .exhibit-grid { gap: 8px; }
+    .exhibit img { height: 100px; }
+    .exhibit .exhibit-label { font-size: 0.7em; padding: 4px 6px; }
+    .exhibit .exhibit-caption { font-size: 0.6em; padding: 0 6px 4px; }
+    .side-by-side { gap: 16px; }
+    .calc-layout { gap: 20px; }
+    .calc-earth { width: 180px; height: 180px; }
+    .formula-block { margin-bottom: 8px; padding: 8px 12px; }
+    .formula-result { font-size: 1.2em; }
+    .scary-comparison { margin-top: 6px; padding: 6px 10px; }
+    .scary-comparison .big { font-size: 1em; }
+    .scary-comparison .sub { font-size: 0.7em; }
+    .slide-2 h2 { font-size: 1.3em; }
+    .jt-subtitle { font-size: 0.75em !important; }
+    .jt-bottom-text { font-size: 1em !important; }
+    .slide-counter { font-size: 0.65em; bottom: 8px; left: 80px; }
+    .un-overlay.zoomed .un-zoom-container { width: 280px; height: 280px; }
+
+    /* Scale SVGs to fit small screens */
+    .slide svg { max-width: 90vw; max-height: 45vh; }
+  }
+
 </style>
 </head>
 <body tabindex="0" style="outline:none">
+
+<!-- Portrait orientation warning -->
+<div class="rotate-warning" id="rotateWarning">
+  <div class="phone-icon">📱</div>
+  <h2>Rotate Your Phone! 🔄</h2>
+  <p>This presentation works best in landscape mode.<br>Please turn your device sideways.</p>
+</div>
+
+<!-- Mobile navigation arrows -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="nav-prev" id="btnPrev" aria-label="Previous">◀</button>
+  <button class="nav-next" id="btnNext" aria-label="Next">▶</button>
+</div>
 
 <!-- ═══ SLIDE 1: TITLE ═══ -->
 <div class="slide slide-1 active" data-slide="1">
@@ -2032,11 +2167,15 @@
 
   // Click left half = back, right half = forward, but ignore if on slide 0 step 0 going back
   document.addEventListener('click', e => {
-    // Ignore clicks on links/buttons
-    if (e.target.closest('a, button')) return;
+    // Ignore clicks on links/buttons/mobile nav
+    if (e.target.closest('a, button, .mobile-nav')) return;
     if (e.clientX > window.innerWidth / 2) advance();
     else if (currentSlide > 0 || currentStep > 0) goBack();
   });
+
+  // Mobile nav buttons
+  document.getElementById('btnNext').addEventListener('click', e => { e.stopPropagation(); advance(); });
+  document.getElementById('btnPrev').addEventListener('click', e => { e.stopPropagation(); goBack(); });
 
   // Ensure keyboard works immediately on page load
   document.body.focus();
