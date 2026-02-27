@@ -672,20 +672,20 @@
   </div>
 
   <div style="display:flex;gap:20px;justify-content:center;max-width:900px;margin:0 auto">
-    <div class="evidence-card" data-step="4" style="flex:1">
+    <div class="evidence-card" data-step="6" style="flex:1">
       <h3 style="color:#ffcc00">📐 The Math</h3>
       <p>Over 9.7 km, Earth's curvature should cause a drop of <span class="highlight">~7.4 metres</span>.</p>
       <p style="margin-top:8px">The flag was mounted 1.5m above water. It should be <span class="highlight-red">completely hidden</span> behind the curve.</p>
     </div>
 
-    <div class="evidence-card green" data-step="5" style="flex:1">
+    <div class="evidence-card green" data-step="7" style="flex:1">
       <h3 style="color:#44ff44">🔭 The Result</h3>
       <p>Samuel Rowbotham observed the flag at <span class="highlight">full height</span> across the entire 9.7 km canal.</p>
       <p style="margin-top:8px;color:#88ff88">No curvature detected. Zero. None. Nada. 🎯</p>
     </div>
   </div>
 
-  <div class="conclusion-banner gold" data-step="6">Repeatable. Observable. Undeniable. 🔬</div>
+  <div class="conclusion-banner gold" data-step="8">Repeatable. Observable. Undeniable. 🔬</div>
 </div>
 
 <!-- ═══ SLIDE 3: SPEED CALCULATION ═══ -->
@@ -1529,12 +1529,15 @@
 
   // Custom step handlers for SVG animations
   const stepHandlers = {
-    // slide 1 (bedford), step 4 = show sight line & expected curve
+    // slide 1 (bedford), step 4 = show expected curve, step 5 = sight line, step 6 = result
     '1-4': function() {
-      ['sightLine','expectedCurve','curveLabel'].forEach(id =>
+      ['expectedCurve','curveLabel'].forEach(id =>
         document.getElementById(id).classList.add('revealed'));
     },
     '1-5': function() {
+      document.getElementById('sightLine').classList.add('revealed');
+    },
+    '1-7': function() {
       ['sameHeight','resultLabel'].forEach(id =>
         document.getElementById(id).classList.add('revealed'));
     },
@@ -1672,9 +1675,12 @@
       const slide = slides[currentSlide];
       // undo svg steps per slide
       if (currentSlide === 1 && currentStep === 4) {
-        ['sightLine','expectedCurve','curveLabel'].forEach(id => document.getElementById(id).classList.remove('revealed'));
+        ['expectedCurve','curveLabel'].forEach(id => document.getElementById(id).classList.remove('revealed'));
       }
       if (currentSlide === 1 && currentStep === 5) {
+        document.getElementById('sightLine').classList.remove('revealed');
+      }
+      if (currentSlide === 1 && currentStep === 7) {
         ['sameHeight','resultLabel'].forEach(id => document.getElementById(id).classList.remove('revealed'));
       }
       if (currentSlide === 2 && currentStep === 2) {
