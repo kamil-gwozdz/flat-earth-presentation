@@ -1507,6 +1507,264 @@
 <div class="nav-hint">→ to advance</div>
 
 <script>
+  // ── Sound Effects System (Web Audio API — no external files) ──
+  const SFX = (() => {
+    let ctx;
+    function C() { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); return ctx; }
+
+    function boing() {
+      const c=C(), o=c.createOscillator(), g=c.createGain();
+      o.type='sine';
+      o.frequency.setValueAtTime(300,c.currentTime);
+      o.frequency.exponentialRampToValueAtTime(600,c.currentTime+0.1);
+      o.frequency.exponentialRampToValueAtTime(150,c.currentTime+0.35);
+      g.gain.setValueAtTime(0.3,c.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.4);
+      o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime+0.4);
+    }
+
+    function bop() {
+      const c=C(), o=c.createOscillator(), g=c.createGain();
+      o.type='triangle';
+      o.frequency.setValueAtTime(800,c.currentTime);
+      o.frequency.exponentialRampToValueAtTime(200,c.currentTime+0.1);
+      g.gain.setValueAtTime(0.3,c.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.15);
+      o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime+0.15);
+    }
+
+    function boop() {
+      const c=C(), o=c.createOscillator(), g=c.createGain();
+      o.type='sine';
+      o.frequency.setValueAtTime(400,c.currentTime);
+      o.frequency.exponentialRampToValueAtTime(200,c.currentTime+0.2);
+      g.gain.setValueAtTime(0.25,c.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.25);
+      o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime+0.25);
+    }
+
+    function aaah() {
+      const c=C();
+      [1,1.5,2,2.5].forEach((m,i) => {
+        const o=c.createOscillator(), g=c.createGain();
+        o.type='sine';
+        o.frequency.setValueAtTime(600*m,c.currentTime);
+        o.frequency.exponentialRampToValueAtTime(200*m,c.currentTime+0.8);
+        g.gain.setValueAtTime(0.08,c.currentTime+i*0.05);
+        g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+1);
+        o.connect(g).connect(c.destination);
+        o.start(c.currentTime+i*0.05); o.stop(c.currentTime+1);
+      });
+    }
+
+    function siren() {
+      const c=C(), dur=1.5, o=c.createOscillator(), g=c.createGain();
+      o.type='sawtooth';
+      for (let t=0;t<dur;t+=0.3) {
+        o.frequency.setValueAtTime(800,c.currentTime+t);
+        o.frequency.linearRampToValueAtTime(1200,c.currentTime+t+0.15);
+        o.frequency.linearRampToValueAtTime(800,c.currentTime+t+0.3);
+      }
+      g.gain.setValueAtTime(0.12,c.currentTime);
+      g.gain.setValueAtTime(0.12,c.currentTime+dur-0.2);
+      g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+dur);
+      o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime+dur);
+    }
+
+    function clapping() {
+      const c=C();
+      for (let i=0;i<14;i++) {
+        const t=c.currentTime+i*0.11+Math.random()*0.04;
+        const buf=c.createBuffer(1,c.sampleRate*0.04,c.sampleRate);
+        const d=buf.getChannelData(0);
+        for (let j=0;j<d.length;j++) d[j]=(Math.random()*2-1)*Math.pow(1-j/d.length,3);
+        const src=c.createBufferSource(), g=c.createGain(), f=c.createBiquadFilter();
+        f.type='bandpass'; f.frequency.value=3000+Math.random()*2000; f.Q.value=0.5;
+        src.buffer=buf; g.gain.setValueAtTime(0.4+Math.random()*0.2,t);
+        src.connect(f).connect(g).connect(c.destination); src.start(t);
+      }
+    }
+
+    function waterFall() {
+      const c=C(), dur=2.5;
+      const buf=c.createBuffer(1,c.sampleRate*dur,c.sampleRate);
+      const d=buf.getChannelData(0);
+      for (let i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+      const src=c.createBufferSource(), g=c.createGain(), f=c.createBiquadFilter();
+      f.type='lowpass';
+      f.frequency.setValueAtTime(600,c.currentTime);
+      f.frequency.linearRampToValueAtTime(2000,c.currentTime+0.5);
+      f.frequency.linearRampToValueAtTime(500,c.currentTime+dur);
+      g.gain.setValueAtTime(0,c.currentTime);
+      g.gain.linearRampToValueAtTime(0.2,c.currentTime+0.3);
+      g.gain.setValueAtTime(0.18,c.currentTime+dur-0.6);
+      g.gain.linearRampToValueAtTime(0,c.currentTime+dur);
+      src.buffer=buf; src.connect(f).connect(g).connect(c.destination); src.start();
+    }
+
+    function planeDeparture() {
+      const c=C(), dur=3;
+      // Engine rumble
+      const buf=c.createBuffer(1,c.sampleRate*dur,c.sampleRate);
+      const d=buf.getChannelData(0);
+      for (let i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+      const src=c.createBufferSource(), g=c.createGain(), f=c.createBiquadFilter();
+      f.type='lowpass';
+      f.frequency.setValueAtTime(200,c.currentTime);
+      f.frequency.exponentialRampToValueAtTime(3000,c.currentTime+dur);
+      g.gain.setValueAtTime(0.12,c.currentTime);
+      g.gain.linearRampToValueAtTime(0.22,c.currentTime+dur*0.6);
+      g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+dur);
+      src.buffer=buf; src.connect(f).connect(g).connect(c.destination); src.start();
+      // Rising whine
+      const o=c.createOscillator(), g2=c.createGain();
+      o.type='sawtooth';
+      o.frequency.setValueAtTime(100,c.currentTime);
+      o.frequency.exponentialRampToValueAtTime(2000,c.currentTime+dur);
+      g2.gain.setValueAtTime(0.02,c.currentTime);
+      g2.gain.linearRampToValueAtTime(0.06,c.currentTime+dur*0.7);
+      g2.gain.exponentialRampToValueAtTime(0.001,c.currentTime+dur);
+      o.connect(g2).connect(c.destination); o.start(); o.stop(c.currentTime+dur);
+    }
+
+    function stamp() {
+      const c=C();
+      // Low thud
+      const o=c.createOscillator(), g=c.createGain();
+      o.type='sine';
+      o.frequency.setValueAtTime(150,c.currentTime);
+      o.frequency.exponentialRampToValueAtTime(30,c.currentTime+0.3);
+      g.gain.setValueAtTime(0.5,c.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.3);
+      o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime+0.35);
+      // Noise click
+      const buf=c.createBuffer(1,c.sampleRate*0.05,c.sampleRate);
+      const d=buf.getChannelData(0);
+      for (let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,8);
+      const src=c.createBufferSource(), g2=c.createGain();
+      g2.gain.value=0.35; src.buffer=buf;
+      src.connect(g2).connect(c.destination); src.start();
+    }
+
+    function bonk() {
+      const c=C();
+      const o=c.createOscillator(), g=c.createGain();
+      o.type='triangle';
+      o.frequency.setValueAtTime(500,c.currentTime);
+      o.frequency.exponentialRampToValueAtTime(80,c.currentTime+0.2);
+      const lfo=c.createOscillator(), lG=c.createGain();
+      lfo.frequency.value=20; lG.gain.value=50;
+      lfo.connect(lG).connect(o.frequency);
+      lfo.start(); lfo.stop(c.currentTime+0.3);
+      g.gain.setValueAtTime(0.4,c.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.35);
+      o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime+0.4);
+    }
+
+    function dramatic() {
+      const c=C();
+      [55,82.5,110,165].forEach(freq => {
+        const o=c.createOscillator(), g=c.createGain();
+        o.type='sine'; o.frequency.value=freq;
+        g.gain.setValueAtTime(0.1,c.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+2);
+        o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime+2);
+      });
+      // Impact noise
+      const buf=c.createBuffer(1,c.sampleRate*0.15,c.sampleRate);
+      const d=buf.getChannelData(0);
+      for (let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,4);
+      const src=c.createBufferSource(), g=c.createGain();
+      g.gain.value=0.25; src.buffer=buf;
+      src.connect(g).connect(c.destination); src.start();
+    }
+
+    function buzzer() {
+      const c=C(), o=c.createOscillator(), g=c.createGain();
+      o.type='square'; o.frequency.value=150;
+      g.gain.setValueAtTime(0.12,c.currentTime);
+      g.gain.setValueAtTime(0.12,c.currentTime+0.4);
+      g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.5);
+      o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime+0.5);
+    }
+
+    function whoosh() {
+      const c=C(), dur=0.8;
+      const buf=c.createBuffer(1,c.sampleRate*dur,c.sampleRate);
+      const d=buf.getChannelData(0);
+      for (let i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+      const src=c.createBufferSource(), g=c.createGain(), f=c.createBiquadFilter();
+      f.type='bandpass'; f.Q.value=5;
+      f.frequency.setValueAtTime(200,c.currentTime);
+      f.frequency.exponentialRampToValueAtTime(4000,c.currentTime+dur*0.4);
+      f.frequency.exponentialRampToValueAtTime(200,c.currentTime+dur);
+      g.gain.setValueAtTime(0,c.currentTime);
+      g.gain.linearRampToValueAtTime(0.25,c.currentTime+dur*0.3);
+      g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+dur);
+      src.buffer=buf; src.connect(f).connect(g).connect(c.destination); src.start();
+    }
+
+    function tadaa() {
+      const c=C();
+      [523.25,659.25,783.99,1046.5].forEach((freq,i) => {
+        const o=c.createOscillator(), g=c.createGain();
+        o.type='triangle'; o.frequency.value=freq;
+        g.gain.setValueAtTime(0,c.currentTime+i*0.12);
+        g.gain.linearRampToValueAtTime(0.15,c.currentTime+i*0.12+0.05);
+        g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+i*0.12+0.8);
+        o.connect(g).connect(c.destination);
+        o.start(c.currentTime+i*0.12); o.stop(c.currentTime+i*0.12+0.8);
+      });
+    }
+
+    function dingDing() {
+      const c=C();
+      [1200,1600].forEach((freq,i) => {
+        const o=c.createOscillator(), g=c.createGain();
+        o.type='sine'; o.frequency.value=freq;
+        g.gain.setValueAtTime(0.2,c.currentTime+i*0.15);
+        g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+i*0.15+0.4);
+        o.connect(g).connect(c.destination);
+        o.start(c.currentTime+i*0.15); o.stop(c.currentTime+i*0.15+0.45);
+      });
+    }
+
+    return { boing, bop, boop, aaah, siren, clapping, waterFall, planeDeparture, stamp, bonk, dramatic, buzzer, whoosh, tadaa, dingDing };
+  })();
+
+  // ── Sound map: which sound plays at each slide-step ──
+  const soundMap = {
+    '0-1': () => SFX.siren(),                   // ⚠️ wake up ⚠️
+    '0-2': () => SFX.dramatic(),                 // main title reveal
+    '0-5': () => SFX.stamp(),                    // 🔴 Share The Truth stamp
+    '1-1': () => SFX.boop(),                     // Bedford Level title
+    '1-8': () => SFX.clapping(),                 // "Repeatable. Observable. Undeniable."
+    '2-2': () => SFX.whoosh(),                   // earth starts spinning
+    '2-5': () => SFX.aaah(),                     // scary speed comparison
+    '3-1': () => SFX.siren(),                    // ⚠️ The Jump Test ⚠️
+    '3-4': () => SFX.boing(),                    // jump animation
+    '3-5': () => SFX.buzzer(),                   // IMPOSSIBLE! ❌
+    '3-6': () => { SFX.tadaa(); setTimeout(()=>SFX.clapping(),500); }, // 🏆 FLAT EARTH CONFIRMED
+    '4-4': () => SFX.waterFall(),                // 💧 water animation
+    '4-5': () => SFX.boop(),                     // "Water doesn't stick..."
+    '5-1': () => SFX.bop(),                      // Horizon title
+    '5-5': () => SFX.boop(),                     // "Where's the curve?"
+    '6-9': () => SFX.clapping(),                 // "6 exhibits. 0 curvature."
+    '7-3': () => SFX.planeDeparture(),           // ✈️ plane animations
+    '7-5': () => SFX.boop(),                     // "No curve correction needed"
+    '8-3': () => SFX.siren(),                    // 🇺🇳 UN flag — scam alert!
+    '8-7': () => SFX.dingDing(),                 // NASA = "To Deceive"
+    '8-8': () => SFX.dramatic(),                 // "Hidden in plain sight"
+    '9-8': () => SFX.boop(),                     // flight paths conclusion
+    '10-4': () => setTimeout(()=>SFX.bonk(),1800), // BONK! 💥 (after disc hits ball)
+    '10-8': () => SFX.clapping(),                // "Gravity is just the floor hitting you"
+  };
+
+  // Sounds when entering a new slide (not on step reveal)
+  const slideEntrySounds = {
+    11: () => { SFX.tadaa(); setTimeout(()=>SFX.clapping(),600); } // THE END 🎉
+  };
+
   // ── Step-based presentation engine ──
   // Each slide has N steps. Arrow right reveals next step; when all steps
   // are shown, the next press advances to the next slide.
@@ -1656,6 +1914,8 @@
       revealUpTo(slide, 0);
     }
     updateCounter();
+    // Play slide entry sound
+    if (!revealAll) { const es = slideEntrySounds[currentSlide]; if (es) es(); }
   }
 
   function resetSvgSteps(slideEl) {
@@ -1672,6 +1932,8 @@
       revealUpTo(slide, currentStep);
       const handler = stepHandlers[`${currentSlide}-${currentStep}`];
       if (handler) handler();
+      const sfx = soundMap[`${currentSlide}-${currentStep}`];
+      if (sfx) sfx();
     } else if (currentSlide < total - 1) {
       showSlide(currentSlide + 1, false);
     }
