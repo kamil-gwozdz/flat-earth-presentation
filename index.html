@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Truth They Don't Want You To Know</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
+    background: #0a0a2e;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* ── Slide system ── */
+  .slide {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .slide.active { display: flex; }
+
+  /* ── Navigation ── */
+  .nav-hint {
+    position: fixed;
+    bottom: 16px;
+    right: 24px;
+    font-size: 0.8em;
+    color: #ffffff55;
+    z-index: 100;
+    font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+  }
+  .slide-counter {
+    position: fixed;
+    bottom: 16px;
+    left: 24px;
+    font-size: 0.8em;
+    color: #ffffff55;
+    z-index: 100;
+    font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 1 — TITLE
+     ══════════════════════════════════════ */
+  .slide-1 {
+    background:
+      linear-gradient(to bottom, rgba(5,5,30,0.55) 0%, rgba(5,5,30,0.7) 40%, rgba(5,5,30,0.85) 100%),
+      url('https://cas.uncg.edu/wp-content/uploads/2023/09/Banner-fusion-whale-earwax-and-flat-earth-wit_Jeffrey-Kaplan-1-768x576.jpg')
+      center/cover no-repeat;
+  }
+
+  .title-card {
+    text-align: center;
+    animation: fadeInUp 1.2s ease-out;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(60px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .top-label {
+    font-size: 1.1em;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #ff4444;
+    margin-bottom: 12px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .main-title {
+    font-size: 4.5em;
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: #fff;
+    text-shadow:
+      0 0 30px rgba(255,68,68,0.6),
+      0 0 60px rgba(255,68,68,0.3);
+    margin-bottom: 16px;
+  }
+  .main-title .em { color: #ffcc00; }
+
+  .subtitle {
+    font-size: 1.4em;
+    color: #cccccc;
+    margin-bottom: 40px;
+    font-style: italic;
+  }
+
+  .author-line {
+    font-size: 0.95em;
+    color: #888;
+    letter-spacing: 2px;
+  }
+  .author-line span {
+    color: #ffcc00;
+  }
+
+  .stamp {
+    margin-top: 32px;
+    border: 3px solid #ff4444;
+    border-radius: 12px;
+    padding: 8px 28px;
+    display: inline-block;
+    transform: rotate(-4deg);
+    color: #ff4444;
+    font-size: 1.1em;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    animation: stampIn 0.6s ease-out 1.5s both;
+  }
+  @keyframes stampIn {
+    from { transform: rotate(-4deg) scale(3); opacity: 0; }
+    to { transform: rotate(-4deg) scale(1); opacity: 1; }
+  }
+
+  .decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .decorations .icon {
+    position: absolute;
+    font-size: 2em;
+    opacity: 0.15;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 2 — JUMP TEST
+     ══════════════════════════════════════ */
+  .slide-2 { background: #0a0a2e; }
+  .slide-2 iframe {
+    border: none;
+    width: 100vw;
+    height: 100vh;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ SLIDE 1: TITLE ═══ -->
+<div class="slide slide-1 active" data-slide="1">
+  <div class="decorations">
+    <span class="icon" style="top:10%;left:5%;animation-delay:0s">🌍</span>
+    <span class="icon" style="top:20%;right:8%;animation-delay:1s">🔍</span>
+    <span class="icon" style="bottom:15%;left:12%;animation-delay:2s">📐</span>
+    <span class="icon" style="top:60%;right:5%;animation-delay:0.5s">🛩️</span>
+    <span class="icon" style="top:8%;left:45%;animation-delay:1.5s">⚠️</span>
+    <span class="icon" style="bottom:25%;right:20%;animation-delay:3s">🧭</span>
+    <span class="icon" style="top:40%;left:3%;animation-delay:2.5s">🌅</span>
+  </div>
+
+  <div class="title-card">
+    <div class="top-label">⚠️ classified presentation ⚠️</div>
+    <div class="main-title">
+      The <span class="em">Flat Earth</span><br>
+      Evidence They<br>
+      Can't Debunk
+    </div>
+    <div class="subtitle">"Research" that will make you question everything*</div>
+    <div class="author-line">
+      A <span>Totally Serious</span> Scientific Presentation
+    </div>
+    <div class="stamp">🔴 Top Secret 🔴</div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 2: JUMP TEST ═══ -->
+<div class="slide slide-2" data-slide="2">
+  <iframe src="flat-earth-jump-test.html"></iframe>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<div class="slide-counter" id="counter">1 / 2</div>
+<div class="nav-hint">← →  or click to navigate</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+  const total = slides.length;
+
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = (n + total) % total;
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = `${current + 1} / ${total}`;
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') show(current + 1);
+    if (e.key === 'ArrowLeft') show(current - 1);
+  });
+
+  // click right half → next, left half → prev
+  document.addEventListener('click', e => {
+    if (e.clientX > window.innerWidth / 2) show(current + 1);
+    else show(current - 1);
+  });
+</script>
+</body>
+</html>
