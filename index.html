@@ -152,12 +152,75 @@
   /* ══════════════════════════════════════
      SLIDE 2 — JUMP TEST
      ══════════════════════════════════════ */
-  .slide-2 { background: #0a0a2e; }
-  .slide-2 iframe {
-    border: none;
-    width: 100vw;
-    height: 100vh;
+  .slide-2 {
+    background: #0a0a2e;
+    padding: 0;
   }
+  .slide-2 h2 {
+    font-size: 2.2em;
+    color: #ff4444;
+    text-shadow: 0 0 20px #ff4444aa;
+    animation: pulse 2s ease-in-out infinite;
+    margin-top: 18px;
+  }
+  .slide-2 .jt-subtitle {
+    font-size: 0.9em;
+    color: #ffcc00;
+    margin: 6px 0 10px;
+    letter-spacing: 2px;
+  }
+  .jt-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .jt-panel {
+    text-align: center;
+    width: 460px;
+  }
+  .jt-panel-title {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    padding: 6px 16px;
+    border-radius: 8px;
+    display: inline-block;
+  }
+  .jt-panel.left .jt-panel-title {
+    background: rgba(255, 68, 68, 0.2);
+    border: 2px solid #ff4444;
+    color: #ff6666;
+  }
+  .jt-panel.right .jt-panel-title {
+    background: rgba(68, 255, 68, 0.15);
+    border: 2px solid #44ff44;
+    color: #66ff66;
+  }
+  .jt-verdict {
+    font-size: 1.6em;
+    margin-top: 12px;
+    font-weight: 900;
+    letter-spacing: 3px;
+  }
+  .jt-panel.left .jt-verdict { color: #ff4444; }
+  .jt-panel.right .jt-verdict { color: #44ff44; }
+  .jt-speed-label {
+    font-size: 0.85em;
+    color: #ff9900;
+    margin-top: 4px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .jt-bottom-text {
+    font-size: 1.5em;
+    color: #ffcc00;
+    padding: 10px;
+    text-shadow: 0 0 15px #ffcc0088;
+    letter-spacing: 3px;
+  }
+  /* hide animated elements until slide is active, then restart */
+  .slide-2 svg { }
+  
 </style>
 </head>
 <body>
@@ -191,7 +254,131 @@
 
 <!-- ═══ SLIDE 2: JUMP TEST ═══ -->
 <div class="slide slide-2" data-slide="2">
-  <iframe src="flat-earth-jump-test.html"></iframe>
+  <h2>⚠️ The Jump Test ⚠️</h2>
+  <div class="jt-subtitle">IF EARTH SPINS AT 1,670 KM/H...</div>
+  <div class="jt-container">
+    <!-- LEFT: Globe scenario -->
+    <div class="jt-panel left">
+      <div class="jt-panel-title">🌍 ON A "SPINNING GLOBE"</div>
+      <svg viewBox="0 0 460 400" width="460" height="400">
+        <defs>
+          <pattern id="grid1" width="40" height="40" patternUnits="userSpaceOnUse">
+            <rect width="40" height="40" fill="#1a3a1a"/>
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#2a5a2a" stroke-width="1"/>
+          </pattern>
+          <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#ff4444"/>
+          </marker>
+        </defs>
+        <g><rect x="0" y="310" width="920" height="90" fill="url(#grid1)">
+          <animateTransform attributeName="transform" type="translate" values="0,0; -460,0" dur="3s" begin="2s" fill="freeze"/>
+        </rect></g>
+        <line x1="0" y1="310" x2="460" y2="310" stroke="#44aa44" stroke-width="2"/>
+        <g opacity="0.4">
+          <line x1="120" y1="310" x2="120" y2="330" stroke="#ff8888" stroke-width="2"/>
+          <text x="120" y="345" text-anchor="middle" fill="#ff8888" font-size="11" font-family="'Comic Sans MS','Comic Neue',cursive">START</text>
+          <circle cx="120" cy="280" r="12" fill="none" stroke="#ff888844" stroke-width="2" stroke-dasharray="4"/>
+          <line x1="120" y1="292" x2="120" y2="308" stroke="#ff888844" stroke-width="2" stroke-dasharray="4"/>
+        </g>
+        <g>
+          <g>
+            <animateTransform attributeName="transform" type="translate" values="0,0; 0,-100; 0,0" dur="3s" begin="2s" fill="freeze" keyTimes="0; 0.4; 1" keySplines="0.33 1 0.68 1; 0.32 0 0.67 0" calcMode="spline"/>
+            <circle cx="120" cy="280" r="14" fill="#ffcc66" stroke="#cc9933" stroke-width="2"/>
+            <circle cx="115" cy="278" r="2" fill="#333"/><circle cx="125" cy="278" r="2" fill="#333"/>
+            <ellipse cx="120" cy="285" rx="4" ry="3" fill="#cc3333">
+              <animate attributeName="ry" values="1;5;5;3" dur="3s" begin="2s" fill="freeze"/>
+            </ellipse>
+            <line x1="120" y1="294" x2="120" y2="308" stroke="#ffcc66" stroke-width="3"/>
+            <line x1="120" y1="298" x2="105" y2="288" stroke="#ffcc66" stroke-width="2.5">
+              <animate attributeName="x2" values="105;95;110;100" dur="0.4s" begin="2s" repeatCount="8"/>
+              <animate attributeName="y2" values="288;278;290;275" dur="0.4s" begin="2s" repeatCount="8"/>
+            </line>
+            <line x1="120" y1="298" x2="135" y2="288" stroke="#ffcc66" stroke-width="2.5">
+              <animate attributeName="x2" values="135;145;130;140" dur="0.4s" begin="2s" repeatCount="8"/>
+              <animate attributeName="y2" values="288;275;290;278" dur="0.4s" begin="2s" repeatCount="8"/>
+            </line>
+            <line x1="120" y1="308" x2="112" y2="322" stroke="#ffcc66" stroke-width="2.5">
+              <animate attributeName="x2" values="112;108;115" dur="0.5s" begin="2s" repeatCount="6"/>
+            </line>
+            <line x1="120" y1="308" x2="128" y2="322" stroke="#ffcc66" stroke-width="2.5">
+              <animate attributeName="x2" values="128;132;125" dur="0.5s" begin="2s" repeatCount="6"/>
+            </line>
+          </g>
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;1" dur="0.3s" begin="2.5s" fill="freeze"/>
+          <line x1="200" y1="360" x2="380" y2="360" stroke="#ff4444" stroke-width="3" marker-end="url(#arrowRed)"/>
+          <text x="290" y="385" text-anchor="middle" fill="#ff4444" font-size="13" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">EARTH MOVES 1,393m</text>
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;1" dur="0.3s" begin="5s" fill="freeze"/>
+          <line x1="120" y1="310" x2="120" y2="330" stroke="#44ff44" stroke-width="2"/>
+          <text x="120" y="345" text-anchor="middle" fill="#44ff44" font-size="11" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">LANDING</text>
+          <text x="280" y="290" text-anchor="middle" fill="#ff4444" font-size="16" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">🤔 SAME SPOT?!</text>
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;1" dur="0.3s" begin="2s" fill="freeze"/>
+          <rect x="280" y="15" width="170" height="40" rx="6" fill="#ff444433" stroke="#ff4444" stroke-width="1.5"/>
+          <text x="365" y="30" text-anchor="middle" fill="#ff4444" font-size="11" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">EARTH SPEED</text>
+          <text x="365" y="47" text-anchor="middle" fill="#ffcc00" font-size="14" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">1,670 KM/H →
+            <animate attributeName="opacity" values="1;0;1" dur="0.5s" repeatCount="indefinite"/>
+          </text>
+        </g>
+      </svg>
+      <div class="jt-verdict">IMPOSSIBLE! ❌</div>
+      <div class="jt-speed-label">⚠ You should land 1.4 KM away! ⚠</div>
+    </div>
+
+    <!-- RIGHT: Flat Earth scenario -->
+    <div class="jt-panel right">
+      <div class="jt-panel-title">📐 ON A FLAT EARTH</div>
+      <svg viewBox="0 0 460 400" width="460" height="400">
+        <defs>
+          <pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse">
+            <rect width="40" height="40" fill="#1a3a1a"/>
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#2a5a2a" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect x="0" y="310" width="460" height="90" fill="url(#grid2)"/>
+        <line x1="0" y1="310" x2="460" y2="310" stroke="#44ff44" stroke-width="2"/>
+        <line x1="230" y1="310" x2="230" y2="330" stroke="#44ff44" stroke-width="2"/>
+        <text x="230" y="345" text-anchor="middle" fill="#44ff44" font-size="11" font-family="'Comic Sans MS','Comic Neue',cursive">START</text>
+        <g>
+          <animateTransform attributeName="transform" type="translate" values="0,0; 0,-100; 0,0" dur="3s" begin="2s" fill="freeze" keyTimes="0; 0.4; 1" keySplines="0.33 1 0.68 1; 0.32 0 0.67 0" calcMode="spline"/>
+          <circle cx="230" cy="280" r="14" fill="#ffcc66" stroke="#cc9933" stroke-width="2"/>
+          <circle cx="225" cy="278" r="2" fill="#333"/><circle cx="235" cy="278" r="2" fill="#333"/>
+          <path d="M224,284 Q230,291 236,284" fill="none" stroke="#333" stroke-width="1.5"/>
+          <line x1="230" y1="294" x2="230" y2="308" stroke="#ffcc66" stroke-width="3"/>
+          <line x1="230" y1="298" x2="215" y2="305" stroke="#ffcc66" stroke-width="2.5"/>
+          <line x1="230" y1="298" x2="245" y2="305" stroke="#ffcc66" stroke-width="2.5"/>
+          <line x1="230" y1="308" x2="222" y2="322" stroke="#ffcc66" stroke-width="2.5"/>
+          <line x1="230" y1="308" x2="238" y2="322" stroke="#ffcc66" stroke-width="2.5"/>
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;1" dur="0.3s" begin="5s" fill="freeze"/>
+          <text x="230" y="365" text-anchor="middle" fill="#44ff44" font-size="11" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">LANDING</text>
+          <text x="230" y="380" text-anchor="middle" fill="#44ff44" font-size="9" font-family="'Comic Sans MS','Comic Neue',cursive">(same spot ✓)</text>
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;1" dur="0.5s" begin="5.2s" fill="freeze"/>
+          <text x="230" y="240" text-anchor="middle" fill="#44ff44" font-size="50">✓</text>
+          <g stroke="#44ff4466" stroke-width="2">
+            <line x1="230" y1="200" x2="230" y2="180"><animate attributeName="y2" values="200;170" dur="0.5s" begin="5.2s" fill="freeze"/></line>
+            <line x1="260" y1="210" x2="280" y2="195"><animate attributeName="x2" values="260;290" dur="0.5s" begin="5.2s" fill="freeze"/></line>
+            <line x1="200" y1="210" x2="180" y2="195"><animate attributeName="x2" values="200;170" dur="0.5s" begin="5.2s" fill="freeze"/></line>
+          </g>
+        </g>
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;1" dur="0.3s" begin="2s" fill="freeze"/>
+          <rect x="290" y="15" width="160" height="40" rx="6" fill="#44ff4422" stroke="#44ff44" stroke-width="1.5"/>
+          <text x="370" y="30" text-anchor="middle" fill="#44ff44" font-size="11" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">EARTH SPEED</text>
+          <text x="370" y="47" text-anchor="middle" fill="#44ff44" font-size="14" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">0 KM/H ✓</text>
+        </g>
+      </svg>
+      <div class="jt-verdict">MATCHES REALITY! ✅</div>
+    </div>
+  </div>
+  <div class="jt-bottom-text">🏆 FLAT EARTH CONFIRMED 🏆</div>
 </div>
 
 <!-- ═══ NAV ═══ -->
