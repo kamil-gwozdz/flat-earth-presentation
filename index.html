@@ -212,6 +212,21 @@
   .svg-step { opacity: 0; transition: opacity 0.4s ease; }
   .svg-step.revealed { opacity: 1; }
 
+  /* Flight path route drawing animation */
+  .fp-route {
+    opacity: 0;
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    transition: opacity 0.3s ease;
+  }
+  .fp-route.revealed {
+    opacity: 1;
+    animation: drawRoute 1.8s ease forwards;
+  }
+  @keyframes drawRoute {
+    to { stroke-dashoffset: 0; }
+  }
+
   .jt-verdict {
     font-size: 1.6em;
     margin-top: 12px;
@@ -1014,87 +1029,184 @@
 
 <!-- ═══ SLIDE 9: FLIGHT PATHS ═══ -->
 <div class="slide slide-dark" data-slide="9">
-  <h2 data-step="1">🛩️ Flight Path "Anomalies"</h2>
+  <h2 data-step="1">🛩️ Flight Path Anomalies</h2>
   <div class="slide-subtitle" data-step="2">Routes that make NO sense on a globe...</div>
 
-  <div style="display:flex;gap:40px;align-items:flex-start;justify-content:center">
-    <div data-step="3" style="flex:1;max-width:500px">
-      <svg viewBox="0 0 400 400" width="400" height="400">
-        <!-- Simplified flat earth map -->
-        <circle cx="200" cy="200" r="180" fill="#1a3355" stroke="#44aaff44" stroke-width="2"/>
-        <!-- Antarctica ring -->
-        <circle cx="200" cy="200" r="180" fill="none" stroke="#aaddff" stroke-width="12" opacity="0.3"/>
-        <!-- Continents (very simplified) -->
-        <!-- North America -->
-        <ellipse cx="130" cy="130" rx="35" ry="30" fill="#2d8a4e" opacity="0.7"/>
-        <text x="130" y="135" text-anchor="middle" fill="#fff" font-size="8" font-family="'Comic Sans MS',cursive">N.America</text>
-        <!-- South America -->
-        <ellipse cx="155" cy="220" rx="18" ry="30" fill="#2d8a4e" opacity="0.7"/>
-        <text x="155" y="225" text-anchor="middle" fill="#fff" font-size="7" font-family="'Comic Sans MS',cursive">S.Am</text>
-        <!-- Europe -->
-        <ellipse cx="215" cy="110" rx="18" ry="15" fill="#2d8a4e" opacity="0.7"/>
-        <text x="215" y="113" text-anchor="middle" fill="#fff" font-size="7" font-family="'Comic Sans MS',cursive">Europe</text>
-        <!-- Africa -->
-        <ellipse cx="225" cy="175" rx="20" ry="30" fill="#2d8a4e" opacity="0.7"/>
-        <text x="225" y="180" text-anchor="middle" fill="#fff" font-size="8" font-family="'Comic Sans MS',cursive">Africa</text>
-        <!-- Asia -->
-        <ellipse cx="290" cy="120" rx="35" ry="25" fill="#2d8a4e" opacity="0.7"/>
-        <text x="290" y="123" text-anchor="middle" fill="#fff" font-size="8" font-family="'Comic Sans MS',cursive">Asia</text>
-        <!-- Australia -->
-        <ellipse cx="310" cy="230" rx="20" ry="14" fill="#2d8a4e" opacity="0.7"/>
-        <text x="310" y="233" text-anchor="middle" fill="#fff" font-size="7" font-family="'Comic Sans MS',cursive">Australia</text>
-        <!-- North Pole center -->
-        <circle cx="200" cy="90" r="3" fill="#fff"/>
-        <text x="200" y="82" text-anchor="middle" fill="#fff" font-size="8" font-family="'Comic Sans MS',cursive">N.Pole</text>
-        <!-- Antarctica label -->
-        <text x="200" y="393" text-anchor="middle" fill="#aaddff" font-size="9" font-family="'Comic Sans MS',cursive" font-weight="bold">🧊 ANTARCTICA (ICE WALL) 🧊</text>
+  <div data-step="3" style="display:flex;gap:24px;align-items:flex-start;justify-content:center;margin-top:8px">
 
-        <!-- Flight route 1: Sydney → Santiago (the long way) -->
-        <path class="svg-step" id="route1" d="M 310,230 Q 200,310 155,220" fill="none" stroke="#ff4444" stroke-width="2.5" stroke-dasharray="6,4"/>
-        <text class="svg-step" id="route1label" x="230" y="290" text-anchor="middle" fill="#ff4444" font-size="9" font-family="'Comic Sans MS',cursive" font-weight="bold">Sydney→Santiago</text>
+    <!-- ── GLOBE MODEL (3D) ── -->
+    <div style="text-align:center">
+      <div style="color:#4488cc;font-size:0.85em;font-weight:bold;margin-bottom:4px;font-family:'Comic Sans MS',cursive;letter-spacing:2px">GLOBE MODEL</div>
+      <svg viewBox="0 0 420 420" width="360" height="360">
+        <defs>
+          <radialGradient id="fpGlobeGrad" cx="38%" cy="32%" r="62%">
+            <stop offset="0%" stop-color="#3388cc"/>
+            <stop offset="55%" stop-color="#1a5588"/>
+            <stop offset="100%" stop-color="#0a2244"/>
+          </radialGradient>
+          <clipPath id="fpGlobeClip"><circle cx="210" cy="210" r="175"/></clipPath>
+        </defs>
 
-        <!-- Flight route 2: Emergency landing -->
-        <path class="svg-step" id="route2" d="M 155,220 Q 160,140 130,130" fill="none" stroke="#ffcc00" stroke-width="2.5" stroke-dasharray="6,4"/>
-        <circle class="svg-step" id="route2dot" cx="130" cy="108" r="5" fill="#ffcc00"/>
-        <text class="svg-step" id="route2label" x="100" y="103" fill="#ffcc00" font-size="8" font-family="'Comic Sans MS',cursive" font-weight="bold">ALASKA?!</text>
+        <!-- Atmosphere glow -->
+        <circle cx="210" cy="210" r="184" fill="none" stroke="#4488cc" stroke-width="5" opacity="0.12"/>
+        <circle cx="210" cy="210" r="179" fill="none" stroke="#4488cc" stroke-width="2" opacity="0.08"/>
+
+        <!-- Globe body -->
+        <circle cx="210" cy="210" r="175" fill="url(#fpGlobeGrad)"/>
+
+        <g clip-path="url(#fpGlobeClip)">
+          <!-- Latitude grid -->
+          <ellipse cx="210" cy="210" rx="175" ry="35" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="0.7"/>
+          <ellipse cx="210" cy="262" rx="158" ry="26" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+          <ellipse cx="210" cy="308" rx="125" ry="18" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+          <ellipse cx="210" cy="158" rx="158" ry="26" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+          <ellipse cx="210" cy="112" rx="125" ry="18" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+
+          <!-- Longitude grid -->
+          <ellipse cx="210" cy="210" rx="35" ry="175" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+          <ellipse cx="210" cy="210" rx="90" ry="175" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+          <ellipse cx="210" cy="210" rx="140" ry="175" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+
+          <!-- Continents (Pacific-centered, south-facing) -->
+          <!-- South America -->
+          <path d="M98,188 Q86,218 90,260 Q96,292 114,306 Q120,284 116,246 Q112,212 104,192Z" fill="#2d8a4e" opacity="0.7"/>
+          <!-- North America -->
+          <path d="M62,108 Q48,132 56,168 Q70,184 94,178 Q116,164 112,138 Q102,114 78,106Z" fill="#2d8a4e" opacity="0.5"/>
+          <!-- Africa -->
+          <path d="M174,168 Q162,200 166,248 Q174,272 188,260 Q192,230 190,198 Q184,174 176,164Z" fill="#2d8a4e" opacity="0.55"/>
+          <!-- Europe -->
+          <path d="M164,118 Q178,108 198,112 Q204,124 194,136 Q178,138 166,130Z" fill="#2d8a4e" opacity="0.45"/>
+          <!-- Asia -->
+          <path d="M208,98 Q238,88 284,94 Q324,108 338,138 Q340,162 326,178 Q298,168 266,154 Q236,140 216,126 Q206,112 208,98Z" fill="#2d8a4e" opacity="0.5"/>
+          <!-- Australia -->
+          <path d="M294,250 Q316,238 334,254 Q330,276 308,280 Q286,270 294,250Z" fill="#2d8a4e" opacity="0.7"/>
+          <!-- New Zealand -->
+          <ellipse cx="348" cy="278" rx="5" ry="9" fill="#2d8a4e" opacity="0.6"/>
+          <!-- Antarctica -->
+          <path d="M78,348 Q128,332 210,326 Q292,332 342,348 Q356,362 326,374 Q210,386 94,374 Q64,362 78,348Z" fill="#ddeeff" opacity="0.45"/>
+        </g>
+
+        <!-- City markers -->
+        <circle cx="304" cy="262" r="5" fill="#ff4444" stroke="#fff" stroke-width="1.5"/>
+        <text x="304" y="250" text-anchor="middle" fill="#ffcccc" font-size="10" font-family="'Comic Sans MS',cursive" font-weight="bold">Sydney</text>
+
+        <circle cx="106" cy="268" r="5" fill="#ff4444" stroke="#fff" stroke-width="1.5"/>
+        <text x="106" y="256" text-anchor="middle" fill="#ffcccc" font-size="10" font-family="'Comic Sans MS',cursive" font-weight="bold">Santiago</text>
+
+        <circle cx="98" cy="254" r="5" fill="#ffaa00" stroke="#fff" stroke-width="1.5"/>
+        <text x="68" y="248" text-anchor="middle" fill="#ffddaa" font-size="9" font-family="'Comic Sans MS',cursive" font-weight="bold">B.Aires</text>
+
+        <circle cx="346" cy="274" r="5" fill="#ffaa00" stroke="#fff" stroke-width="1.5"/>
+        <text x="362" y="268" text-anchor="start" fill="#ffddaa" font-size="9" font-family="'Comic Sans MS',cursive" font-weight="bold">Auckland</text>
+
+        <!-- Route 1 EXPECTED: Sydney→Santiago over Antarctica (short, green dashed) -->
+        <path class="fp-route" id="fpExpected1" d="M 304,262 Q 260,340 210,360 Q 160,340 106,268" fill="none" stroke="#44ff88" stroke-width="2.5" stroke-dasharray="8,5"/>
+        <text class="svg-step" id="fpExpLabel1" x="210" y="378" text-anchor="middle" fill="#44ff88" font-size="10" font-family="'Comic Sans MS',cursive" font-weight="bold">Expected: 11,400 km</text>
+
+        <!-- Route 1 ACTUAL: Sydney→Santiago via North America (long, red) -->
+        <path class="fp-route" id="fpActual1g" d="M 304,262 Q 340,160 210,78 Q 80,160 106,268" fill="none" stroke="#ff4444" stroke-width="3"/>
+        <text class="svg-step" id="fpActLabel1g" x="210" y="64" text-anchor="middle" fill="#ff4444" font-size="11" font-family="'Comic Sans MS',cursive" font-weight="bold">Actual: 18,200 km ❌</text>
+
+        <!-- Route 2 ACTUAL: Buenos Aires→Auckland via North (long, orange) -->
+        <path class="fp-route" id="fpActual2g" d="M 98,254 Q 52,138 210,82 Q 368,138 346,274" fill="none" stroke="#ffaa00" stroke-width="3"/>
+        <text class="svg-step" id="fpActLabel2g" x="130" y="122" text-anchor="middle" fill="#ffaa00" font-size="10" font-family="'Comic Sans MS',cursive" font-weight="bold">Actual: 15,800 km ❌</text>
       </svg>
     </div>
 
-    <div style="flex:1;max-width:450px">
-      <div class="evidence-card red" data-step="4">
-        <h3 style="color:#ff4444">🚫 No Direct Flights Over Antarctica</h3>
-        <p>Sydney to Santiago should be <span class="highlight">shortest over Antarctica</span> on a globe. Airlines refuse to fly this route.</p>
-        <p style="margin-top:8px;color:#ff8888;font-size:0.85em">"Safety reasons" — sure, because Antarctica is so dangerous, unlike the Pacific Ocean 🙄</p>
-      </div>
+    <!-- ── FLAT EARTH MODEL (2D) ── -->
+    <div style="text-align:center">
+      <div style="color:#44ff88;font-size:0.85em;font-weight:bold;margin-bottom:4px;font-family:'Comic Sans MS',cursive;letter-spacing:2px">FLAT EARTH MODEL</div>
+      <svg viewBox="0 0 420 420" width="360" height="360">
+        <defs>
+          <radialGradient id="fpFlatGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1a4466"/>
+            <stop offset="80%" stop-color="#0d2840"/>
+            <stop offset="100%" stop-color="#091e30"/>
+          </radialGradient>
+        </defs>
 
-      <div class="evidence-card" data-step="5">
-        <h3 style="color:#ffcc00">🆘 Emergency Landings Make No Sense</h3>
-        <p>Southern hemisphere flights making emergency landings in <span class="highlight">Alaska</span>?!</p>
-        <p style="margin-top:8px">On a globe: completely insane.<br>On a flat earth map: <span class="highlight">the nearest airport</span>. 🤯</p>
-      </div>
+        <!-- Ice wall ring -->
+        <circle cx="210" cy="210" r="188" fill="none" stroke="#aaddff" stroke-width="14" opacity="0.2"/>
+        <!-- Ocean disc -->
+        <circle cx="210" cy="210" r="180" fill="url(#fpFlatGrad)" stroke="#44aaff" stroke-width="1.5" opacity="0.9"/>
 
-      <table class="route-table" data-step="6">
-        <tr><th>ROUTE</th><th>GLOBE</th><th>REALITY</th></tr>
-        <tr>
-          <td>Sydney → Santiago</td>
-          <td class="dist-globe">Fly over Antarctica</td>
-          <td class="dist-actual">Goes via USA ❌</td>
-        </tr>
-        <tr>
-          <td>Johannesburg → Perth</td>
-          <td class="dist-globe">Direct over ocean</td>
-          <td class="dist-actual">Stops in Dubai ❌</td>
-        </tr>
-        <tr>
-          <td>Santiago → Auckland</td>
-          <td class="dist-globe">Short southern route</td>
-          <td class="dist-actual">14+ hour detour ❌</td>
-        </tr>
-      </table>
+        <!-- Latitude rings -->
+        <circle cx="210" cy="210" r="36" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+        <circle cx="210" cy="210" r="72" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+        <circle cx="210" cy="210" r="100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" stroke-dasharray="4,4"/>
+        <circle cx="210" cy="210" r="135" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" stroke-dasharray="4,4"/>
+        <circle cx="210" cy="210" r="165" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" stroke-dasharray="3,5"/>
+
+        <!-- Longitude lines -->
+        <line x1="210" y1="30" x2="210" y2="390" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+        <line x1="30" y1="210" x2="390" y2="210" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+        <line x1="83" y1="83" x2="337" y2="337" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
+        <line x1="337" y1="83" x2="83" y2="337" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
+
+        <!-- North Pole -->
+        <circle cx="210" cy="210" r="4" fill="#fff" opacity="0.7"/>
+        <text x="210" y="200" text-anchor="middle" fill="#fff" font-size="8" font-family="'Comic Sans MS',cursive" opacity="0.5">N. Pole</text>
+
+        <!-- Continents (azimuthal equidistant projection) -->
+        <!-- North America -->
+        <ellipse cx="164" cy="200" rx="26" ry="20" fill="#2d8a4e" opacity="0.55"/>
+        <text x="164" y="204" text-anchor="middle" fill="#fff" font-size="7" font-family="'Comic Sans MS',cursive">N.America</text>
+        <!-- South America -->
+        <path d="M118,238 Q108,256 112,278 Q118,296 128,288 Q132,266 126,246Z" fill="#2d8a4e" opacity="0.6"/>
+        <text x="106" y="268" text-anchor="middle" fill="#fff" font-size="7" font-family="'Comic Sans MS',cursive">S.Am</text>
+        <!-- Europe -->
+        <ellipse cx="218" cy="242" rx="11" ry="8" fill="#2d8a4e" opacity="0.5"/>
+        <text x="218" y="245" text-anchor="middle" fill="#fff" font-size="6" font-family="'Comic Sans MS',cursive">EU</text>
+        <!-- Africa -->
+        <ellipse cx="248" cy="288" rx="15" ry="24" fill="#2d8a4e" opacity="0.55"/>
+        <text x="248" y="292" text-anchor="middle" fill="#fff" font-size="7" font-family="'Comic Sans MS',cursive">Africa</text>
+        <!-- Asia -->
+        <ellipse cx="260" cy="210" rx="28" ry="16" fill="#2d8a4e" opacity="0.5"/>
+        <text x="260" y="214" text-anchor="middle" fill="#fff" font-size="7" font-family="'Comic Sans MS',cursive">Asia</text>
+        <!-- Australia -->
+        <ellipse cx="288" cy="130" rx="18" ry="12" fill="#2d8a4e" opacity="0.65"/>
+        <text x="288" y="134" text-anchor="middle" fill="#fff" font-size="7" font-family="'Comic Sans MS',cursive">Australia</text>
+        <!-- Antarctica label -->
+        <text x="210" y="404" text-anchor="middle" fill="#aaddff" font-size="8" font-family="'Comic Sans MS',cursive" font-weight="bold">🧊 ANTARCTICA (ICE WALL) 🧊</text>
+
+        <!-- City markers -->
+        <circle cx="268" cy="108" r="5" fill="#ff4444" stroke="#fff" stroke-width="1.5"/>
+        <text x="268" y="98" text-anchor="middle" fill="#ffcccc" font-size="9" font-family="'Comic Sans MS',cursive" font-weight="bold">Sydney</text>
+
+        <circle cx="102" cy="250" r="5" fill="#ff4444" stroke="#fff" stroke-width="1.5"/>
+        <text x="82" y="244" text-anchor="middle" fill="#ffcccc" font-size="9" font-family="'Comic Sans MS',cursive" font-weight="bold">Santiago</text>
+
+        <circle cx="112" cy="272" r="5" fill="#ffaa00" stroke="#fff" stroke-width="1.5"/>
+        <text x="82" y="280" text-anchor="middle" fill="#ffddaa" font-size="9" font-family="'Comic Sans MS',cursive" font-weight="bold">B.Aires</text>
+
+        <circle cx="222" cy="92" r="5" fill="#ffaa00" stroke="#fff" stroke-width="1.5"/>
+        <text x="222" y="82" text-anchor="middle" fill="#ffddaa" font-size="9" font-family="'Comic Sans MS',cursive" font-weight="bold">Auckland</text>
+
+        <!-- Route 1: Sydney→Santiago (STRAIGHT LINE on flat earth) -->
+        <line class="fp-route" id="fpFlatRoute1" x1="268" y1="108" x2="102" y2="250" stroke="#ff4444" stroke-width="3"/>
+        <text class="svg-step" id="fpFlatLabel1" x="200" y="158" text-anchor="middle" fill="#44ff88" font-size="11" font-family="'Comic Sans MS',cursive" font-weight="bold" transform="rotate(-40,200,158)">Straight line ✓</text>
+
+        <!-- Route 2: Buenos Aires→Auckland (STRAIGHT LINE on flat earth) -->
+        <line class="fp-route" id="fpFlatRoute2" x1="112" y1="272" x2="222" y2="92" stroke="#ffaa00" stroke-width="3"/>
+        <text class="svg-step" id="fpFlatLabel2" x="148" y="205" text-anchor="middle" fill="#44ff88" font-size="11" font-family="'Comic Sans MS',cursive" font-weight="bold" transform="rotate(-59,148,205)">Straight line ✓</text>
+      </svg>
     </div>
   </div>
 
-  <div class="conclusion-banner red" data-step="7">Flight paths only make sense on a flat map. 🗺️</div>
+  <div style="display:flex;gap:16px;justify-content:center;margin-top:8px">
+    <div class="evidence-card red" data-step="6" style="max-width:340px;padding:10px 14px">
+      <h3 style="color:#ff4444;font-size:0.9em;margin-bottom:4px">🛩️ Sydney → Santiago</h3>
+      <p style="font-size:0.82em">Globe shortest route: <span class="highlight">11,400 km over Antarctica</span>.</p>
+      <p style="font-size:0.82em;margin-top:3px">Airlines actually fly <span class="highlight-red">18,200 km via North America</span> — 60% longer.</p>
+    </div>
+    <div class="evidence-card" data-step="7" style="max-width:340px;padding:10px 14px;border-left-color:#ffaa00">
+      <h3 style="color:#ffaa00;font-size:0.9em;margin-bottom:4px">🛩️ Buenos Aires → Auckland</h3>
+      <p style="font-size:0.82em">Globe shortest route: <span class="highlight">10,200 km over Antarctica</span>.</p>
+      <p style="font-size:0.82em;margin-top:3px">Airlines actually fly <span class="highlight-red">15,800 km through Los Angeles</span> — 55% longer.</p>
+    </div>
+  </div>
+
+  <div class="conclusion-banner red" data-step="8">Flight paths only make sense on a flat map. 🗺️</div>
 </div>
 
 <!-- ═══ SLIDE 10: BEDFORD LEVEL ═══ -->
@@ -1237,12 +1349,15 @@
         document.getElementById('intoSpaceLabel').classList.add('revealed');
       }, 3200);
     },
-    // slide 8 (flight paths), step 4 = show route 1
+    // slide 8 (flight paths), step 4 = show expected route on globe
     '8-4': function() {
-      ['route1','route1label'].forEach(id => document.getElementById(id).classList.add('revealed'));
+      ['fpExpected1','fpExpLabel1'].forEach(id => document.getElementById(id).classList.add('revealed'));
     },
     '8-5': function() {
-      ['route2','route2dot','route2label'].forEach(id => document.getElementById(id).classList.add('revealed'));
+      ['fpActual1g','fpActLabel1g','fpFlatRoute1','fpFlatLabel1'].forEach(id => document.getElementById(id).classList.add('revealed'));
+    },
+    '8-7': function() {
+      ['fpActual2g','fpActLabel2g','fpFlatRoute2','fpFlatLabel2'].forEach(id => document.getElementById(id).classList.add('revealed'));
     },
     // slide 9 (bedford), step 4 = show sight line & expected curve
     '9-4': function() {
@@ -1331,10 +1446,13 @@
         document.getElementById('altitudeLines').classList.remove('revealed');
       }
       if (currentSlide === 8 && currentStep === 4) {
-        ['route1','route1label'].forEach(id => document.getElementById(id).classList.remove('revealed'));
+        ['fpExpected1','fpExpLabel1'].forEach(id => document.getElementById(id).classList.remove('revealed'));
       }
       if (currentSlide === 8 && currentStep === 5) {
-        ['route2','route2dot','route2label'].forEach(id => document.getElementById(id).classList.remove('revealed'));
+        ['fpActual1g','fpActLabel1g','fpFlatRoute1','fpFlatLabel1'].forEach(id => document.getElementById(id).classList.remove('revealed'));
+      }
+      if (currentSlide === 8 && currentStep === 7) {
+        ['fpActual2g','fpActLabel2g','fpFlatRoute2','fpFlatLabel2'].forEach(id => document.getElementById(id).classList.remove('revealed'));
       }
       if (currentSlide === 9 && currentStep === 4) {
         ['sightLine','expectedCurve','curveLabel'].forEach(id => document.getElementById(id).classList.remove('revealed'));
