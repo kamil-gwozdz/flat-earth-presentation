@@ -1494,6 +1494,14 @@
   <div class="conclusion-banner green" data-step="8">Gravity is just the floor hitting you. ⬆️</div>
 </div>
 
+<!-- ═══ SLIDE 12: THE END ═══ -->
+<div class="slide slide-dark" data-slide="12">
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:80vh">
+    <h1 style="font-size:4em;color:#ffcc00;text-shadow:0 0 30px rgba(255,204,0,0.5)">THE END</h1>
+    <p style="font-size:1.4em;color:#ccc;margin-top:20px">Stay woke. Do your own research. 🌍→📏</p>
+  </div>
+</div>
+
 <!-- ═══ NAV ═══ -->
 <div class="slide-counter" id="counter">1 / 2</div>
 <div class="nav-hint">→ to advance</div>
@@ -1630,7 +1638,7 @@
     revealUpTo(slides[currentSlide], 0);
     resetSvgSteps(slides[currentSlide]);
 
-    currentSlide = ((n % total) + total) % total;
+    currentSlide = Math.max(0, Math.min(n, total - 1));
     const slide = slides[currentSlide];
     slide.classList.add('active');
 
@@ -1664,7 +1672,7 @@
       revealUpTo(slide, currentStep);
       const handler = stepHandlers[`${currentSlide}-${currentStep}`];
       if (handler) handler();
-    } else {
+    } else if (currentSlide < total - 1) {
       showSlide(currentSlide + 1, false);
     }
     updateCounter();
