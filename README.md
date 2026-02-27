@@ -1,6 +1,6 @@
 # 🌍 The Flat Earth Evidence They Can't Debunk
 
-> **⚠️ CLASSIFIED — PEER-REVIEWED* RESEARCH ⚠️**
+> **⚠️ PEER-REVIEWED* RESEARCH — SPREAD THE WORD ⚠️**
 
 A rigorous, evidence-based scientific presentation dismantling the so-called "globe model" using repeatable experiments, observable phenomena, and pure, unbiased logic.
 
