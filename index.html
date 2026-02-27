@@ -29,6 +29,28 @@
   }
   .slide.active { display: flex; }
 
+  /* ── Step system ── */
+  [data-step] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+  [data-step].revealed {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  /* stamp gets its own transform */
+  .stamp[data-step] {
+    transform: rotate(-4deg) scale(2.5);
+    opacity: 0;
+  }
+  .stamp[data-step].revealed {
+    transform: rotate(-4deg) scale(1);
+    opacity: 1;
+  }
+
   /* ── Navigation ── */
   .nav-hint {
     position: fixed;
@@ -59,14 +81,7 @@
       center/cover no-repeat;
   }
 
-  .title-card {
-    text-align: center;
-    animation: fadeInUp 1.2s ease-out;
-  }
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(60px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .title-card { text-align: center; }
 
   .top-label {
     font-size: 1.1em;
@@ -74,6 +89,8 @@
     text-transform: uppercase;
     color: #ff4444;
     margin-bottom: 12px;
+  }
+  .top-label.revealed {
     animation: pulse 2s ease-in-out infinite;
   }
   @keyframes pulse {
@@ -106,9 +123,7 @@
     color: #888;
     letter-spacing: 2px;
   }
-  .author-line span {
-    color: #ffcc00;
-  }
+  .author-line span { color: #ffcc00; }
 
   .stamp {
     margin-top: 32px;
@@ -116,25 +131,19 @@
     border-radius: 12px;
     padding: 8px 28px;
     display: inline-block;
-    transform: rotate(-4deg);
     color: #ff4444;
     font-size: 1.1em;
     font-weight: 700;
     letter-spacing: 4px;
     text-transform: uppercase;
-    animation: stampIn 0.6s ease-out 1.5s both;
-  }
-  @keyframes stampIn {
-    from { transform: rotate(-4deg) scale(3); opacity: 0; }
-    to { transform: rotate(-4deg) scale(1); opacity: 1; }
+    transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
   .decorations {
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     pointer-events: none;
     overflow: hidden;
   }
@@ -160,8 +169,10 @@
     font-size: 2.2em;
     color: #ff4444;
     text-shadow: 0 0 20px #ff4444aa;
-    animation: pulse 2s ease-in-out infinite;
     margin-top: 18px;
+  }
+  .slide-2 h2.revealed {
+    animation: pulse 2s ease-in-out infinite;
   }
   .slide-2 .jt-subtitle {
     font-size: 0.9em;
@@ -196,41 +207,49 @@
     border: 2px solid #44ff44;
     color: #66ff66;
   }
+
+  /* SVG step groups — hidden until revealed */
+  .svg-step { opacity: 0; transition: opacity 0.4s ease; }
+  .svg-step.revealed { opacity: 1; }
+
   .jt-verdict {
     font-size: 1.6em;
     margin-top: 12px;
     font-weight: 900;
     letter-spacing: 3px;
-    opacity: 0;
-    animation: verdictReveal 0.5s ease-out 5.5s forwards;
   }
-  @keyframes verdictReveal {
-    from { opacity: 0; transform: scale(2); }
-    to { opacity: 1; transform: scale(1); }
+  .jt-verdict[data-step].revealed {
+    transform: translateY(0) scale(1);
+    animation: verdictPop 0.4s ease-out;
+  }
+  @keyframes verdictPop {
+    from { transform: scale(2); }
+    to { transform: scale(1); }
   }
   .jt-panel.left .jt-verdict { color: #ff4444; }
   .jt-panel.right .jt-verdict { color: #44ff44; }
+
   .jt-speed-label {
     font-size: 0.85em;
     color: #ff9900;
     margin-top: 4px;
-    opacity: 0;
-    animation: fadeIn 0.3s ease-out 6s forwards, blink 1s step-end 6s infinite;
+  }
+  .jt-speed-label.revealed {
+    animation: blink 1s step-end infinite;
   }
   @keyframes blink { 50% { opacity: 0; } }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
   .jt-bottom-text {
     font-size: 1.5em;
     color: #ffcc00;
     padding: 10px;
     text-shadow: 0 0 15px #ffcc0088;
     letter-spacing: 3px;
-    opacity: 0;
-    animation: verdictReveal 0.8s ease-out 6.5s forwards;
   }
-  /* hide animated elements until slide is active, then restart */
-  .slide-2 svg { }
-  
+  .jt-bottom-text[data-step].revealed {
+    animation: verdictPop 0.6s ease-out;
+  }
+
 </style>
 </head>
 <body>
@@ -248,25 +267,25 @@
   </div>
 
   <div class="title-card">
-    <div class="top-label">⚠️ classified presentation ⚠️</div>
-    <div class="main-title">
+    <div class="top-label" data-step="1">⚠️ classified presentation ⚠️</div>
+    <div class="main-title" data-step="2">
       The <span class="em">Flat Earth</span><br>
       Evidence They<br>
       Can't Debunk
     </div>
-    <div class="subtitle">"Research" that will make you question everything*</div>
-    <div class="author-line">
+    <div class="subtitle" data-step="3">"Research" that will make you question everything*</div>
+    <div class="author-line" data-step="4">
       A <span>Totally Serious</span> Scientific Presentation
     </div>
-    <div class="stamp">🔴 Top Secret 🔴</div>
+    <div class="stamp" data-step="5">🔴 Top Secret 🔴</div>
   </div>
 </div>
 
 <!-- ═══ SLIDE 2: JUMP TEST ═══ -->
 <div class="slide slide-2" data-slide="2">
-  <h2>⚠️ The Jump Test ⚠️</h2>
-  <div class="jt-subtitle">IF EARTH SPINS AT 1,670 KM/H...</div>
-  <div class="jt-container">
+  <h2 data-step="1">⚠️ The Jump Test ⚠️</h2>
+  <div class="jt-subtitle" data-step="2">IF EARTH SPINS AT 1,670 KM/H...</div>
+  <div class="jt-container" data-step="3">
     <!-- LEFT: Globe scenario -->
     <div class="jt-panel left">
       <div class="jt-panel-title">🌍 ON A "SPINNING GLOBE"</div>
@@ -280,63 +299,64 @@
             <polygon points="0 0, 10 3.5, 0 7" fill="#ff4444"/>
           </marker>
         </defs>
+        <!-- ground (moves when jump triggered) -->
         <g><rect x="0" y="310" width="920" height="90" fill="url(#grid1)">
-          <animateTransform attributeName="transform" type="translate" values="0,0; -460,0" dur="3s" begin="2s" fill="freeze"/>
+          <animateTransform id="groundMove" attributeName="transform" type="translate" values="0,0; -460,0" dur="3s" begin="indefinite" fill="freeze"/>
         </rect></g>
         <line x1="0" y1="310" x2="460" y2="310" stroke="#44aa44" stroke-width="2"/>
+        <!-- start marker ghost -->
         <g opacity="0.4">
           <line x1="120" y1="310" x2="120" y2="330" stroke="#ff8888" stroke-width="2"/>
           <text x="120" y="345" text-anchor="middle" fill="#ff8888" font-size="11" font-family="'Comic Sans MS','Comic Neue',cursive">START</text>
           <circle cx="120" cy="280" r="12" fill="none" stroke="#ff888844" stroke-width="2" stroke-dasharray="4"/>
           <line x1="120" y1="292" x2="120" y2="308" stroke="#ff888844" stroke-width="2" stroke-dasharray="4"/>
         </g>
+        <!-- stickman -->
         <g>
           <g>
-            <animateTransform attributeName="transform" type="translate" values="0,0; 0,-100; 0,0" dur="3s" begin="2s" fill="freeze" keyTimes="0; 0.4; 1" keySplines="0.33 1 0.68 1; 0.32 0 0.67 0" calcMode="spline"/>
+            <animateTransform id="leftJump" attributeName="transform" type="translate" values="0,0; 0,-100; 0,0" dur="3s" begin="indefinite" fill="freeze" keyTimes="0; 0.4; 1" keySplines="0.33 1 0.68 1; 0.32 0 0.67 0" calcMode="spline"/>
             <circle cx="120" cy="280" r="14" fill="#ffcc66" stroke="#cc9933" stroke-width="2"/>
             <circle cx="115" cy="278" r="2" fill="#333"/><circle cx="125" cy="278" r="2" fill="#333"/>
             <ellipse cx="120" cy="285" rx="4" ry="3" fill="#cc3333">
-              <animate attributeName="ry" values="1;5;5;3" dur="3s" begin="2s" fill="freeze"/>
+              <animate id="mouthAnim" attributeName="ry" values="1;5;5;3" dur="3s" begin="indefinite" fill="freeze"/>
             </ellipse>
             <line x1="120" y1="294" x2="120" y2="308" stroke="#ffcc66" stroke-width="3"/>
             <line x1="120" y1="298" x2="105" y2="288" stroke="#ffcc66" stroke-width="2.5">
-              <animate attributeName="x2" values="105;95;110;100" dur="0.4s" begin="2s" repeatCount="8"/>
-              <animate attributeName="y2" values="288;278;290;275" dur="0.4s" begin="2s" repeatCount="8"/>
+              <animate id="armL1" attributeName="x2" values="105;95;110;100" dur="0.4s" begin="indefinite" repeatCount="8"/>
+              <animate id="armL2" attributeName="y2" values="288;278;290;275" dur="0.4s" begin="indefinite" repeatCount="8"/>
             </line>
             <line x1="120" y1="298" x2="135" y2="288" stroke="#ffcc66" stroke-width="2.5">
-              <animate attributeName="x2" values="135;145;130;140" dur="0.4s" begin="2s" repeatCount="8"/>
-              <animate attributeName="y2" values="288;275;290;278" dur="0.4s" begin="2s" repeatCount="8"/>
+              <animate id="armR1" attributeName="x2" values="135;145;130;140" dur="0.4s" begin="indefinite" repeatCount="8"/>
+              <animate id="armR2" attributeName="y2" values="288;275;290;278" dur="0.4s" begin="indefinite" repeatCount="8"/>
             </line>
             <line x1="120" y1="308" x2="112" y2="322" stroke="#ffcc66" stroke-width="2.5">
-              <animate attributeName="x2" values="112;108;115" dur="0.5s" begin="2s" repeatCount="6"/>
+              <animate id="legL" attributeName="x2" values="112;108;115" dur="0.5s" begin="indefinite" repeatCount="6"/>
             </line>
             <line x1="120" y1="308" x2="128" y2="322" stroke="#ffcc66" stroke-width="2.5">
-              <animate attributeName="x2" values="128;132;125" dur="0.5s" begin="2s" repeatCount="6"/>
+              <animate id="legR" attributeName="x2" values="128;132;125" dur="0.5s" begin="indefinite" repeatCount="6"/>
             </line>
           </g>
         </g>
-        <g opacity="0">
-          <animate attributeName="opacity" values="0;1" dur="0.3s" begin="2.5s" fill="freeze"/>
+        <!-- earth movement arrow (shown with results) -->
+        <g class="svg-step" id="leftArrow">
           <line x1="200" y1="360" x2="380" y2="360" stroke="#ff4444" stroke-width="3" marker-end="url(#arrowRed)"/>
           <text x="290" y="385" text-anchor="middle" fill="#ff4444" font-size="13" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">EARTH MOVES 1,393m</text>
         </g>
-        <g opacity="0">
-          <animate attributeName="opacity" values="0;1" dur="0.3s" begin="5s" fill="freeze"/>
+        <!-- landing label -->
+        <g class="svg-step" id="leftLanding">
           <line x1="120" y1="310" x2="120" y2="330" stroke="#44ff44" stroke-width="2"/>
           <text x="120" y="345" text-anchor="middle" fill="#44ff44" font-size="11" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">LANDING</text>
           <text x="280" y="290" text-anchor="middle" fill="#ff4444" font-size="16" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">🤔 SAME SPOT?!</text>
         </g>
-        <g opacity="0">
-          <animate attributeName="opacity" values="0;1" dur="0.3s" begin="2s" fill="freeze"/>
+        <!-- speed indicator (shown with animation) -->
+        <g class="svg-step" id="leftSpeed">
           <rect x="280" y="15" width="170" height="40" rx="6" fill="#ff444433" stroke="#ff4444" stroke-width="1.5"/>
           <text x="365" y="30" text-anchor="middle" fill="#ff4444" font-size="11" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">EARTH SPEED</text>
-          <text x="365" y="47" text-anchor="middle" fill="#ffcc00" font-size="14" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">1,670 KM/H →
-            <animate attributeName="opacity" values="1;0;1" dur="0.5s" repeatCount="indefinite"/>
-          </text>
+          <text x="365" y="47" text-anchor="middle" fill="#ffcc00" font-size="14" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">1,670 KM/H →</text>
         </g>
       </svg>
-      <div class="jt-verdict">IMPOSSIBLE! ❌</div>
-      <div class="jt-speed-label">⚠ You should land 1.4 KM away! ⚠</div>
+      <div class="jt-verdict" data-step="5">IMPOSSIBLE! ❌</div>
+      <div class="jt-speed-label" data-step="5">⚠ You should land 1.4 KM away! ⚠</div>
     </div>
 
     <!-- RIGHT: Flat Earth scenario -->
@@ -354,7 +374,7 @@
         <line x1="230" y1="310" x2="230" y2="330" stroke="#44ff44" stroke-width="2"/>
         <text x="230" y="345" text-anchor="middle" fill="#44ff44" font-size="11" font-family="'Comic Sans MS','Comic Neue',cursive">START</text>
         <g>
-          <animateTransform attributeName="transform" type="translate" values="0,0; 0,-100; 0,0" dur="3s" begin="2s" fill="freeze" keyTimes="0; 0.4; 1" keySplines="0.33 1 0.68 1; 0.32 0 0.67 0" calcMode="spline"/>
+          <animateTransform id="rightJump" attributeName="transform" type="translate" values="0,0; 0,-100; 0,0" dur="3s" begin="indefinite" fill="freeze" keyTimes="0; 0.4; 1" keySplines="0.33 1 0.68 1; 0.32 0 0.67 0" calcMode="spline"/>
           <circle cx="230" cy="280" r="14" fill="#ffcc66" stroke="#cc9933" stroke-width="2"/>
           <circle cx="225" cy="278" r="2" fill="#333"/><circle cx="235" cy="278" r="2" fill="#333"/>
           <path d="M224,284 Q230,291 236,284" fill="none" stroke="#333" stroke-width="1.5"/>
@@ -364,59 +384,169 @@
           <line x1="230" y1="308" x2="222" y2="322" stroke="#ffcc66" stroke-width="2.5"/>
           <line x1="230" y1="308" x2="238" y2="322" stroke="#ffcc66" stroke-width="2.5"/>
         </g>
-        <g opacity="0">
-          <animate attributeName="opacity" values="0;1" dur="0.3s" begin="5s" fill="freeze"/>
+        <!-- landing + checkmark -->
+        <g class="svg-step" id="rightLanding">
           <text x="230" y="365" text-anchor="middle" fill="#44ff44" font-size="11" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">LANDING</text>
           <text x="230" y="380" text-anchor="middle" fill="#44ff44" font-size="9" font-family="'Comic Sans MS','Comic Neue',cursive">(same spot ✓)</text>
-        </g>
-        <g opacity="0">
-          <animate attributeName="opacity" values="0;1" dur="0.5s" begin="5.2s" fill="freeze"/>
           <text x="230" y="240" text-anchor="middle" fill="#44ff44" font-size="50">✓</text>
           <g stroke="#44ff4466" stroke-width="2">
-            <line x1="230" y1="200" x2="230" y2="180"><animate attributeName="y2" values="200;170" dur="0.5s" begin="5.2s" fill="freeze"/></line>
-            <line x1="260" y1="210" x2="280" y2="195"><animate attributeName="x2" values="260;290" dur="0.5s" begin="5.2s" fill="freeze"/></line>
-            <line x1="200" y1="210" x2="180" y2="195"><animate attributeName="x2" values="200;170" dur="0.5s" begin="5.2s" fill="freeze"/></line>
+            <line x1="230" y1="200" x2="230" y2="170"/>
+            <line x1="260" y1="210" x2="290" y2="195"/>
+            <line x1="200" y1="210" x2="170" y2="195"/>
           </g>
         </g>
-        <g opacity="0">
-          <animate attributeName="opacity" values="0;1" dur="0.3s" begin="2s" fill="freeze"/>
+        <!-- speed indicator -->
+        <g class="svg-step" id="rightSpeed">
           <rect x="290" y="15" width="160" height="40" rx="6" fill="#44ff4422" stroke="#44ff44" stroke-width="1.5"/>
           <text x="370" y="30" text-anchor="middle" fill="#44ff44" font-size="11" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">EARTH SPEED</text>
           <text x="370" y="47" text-anchor="middle" fill="#44ff44" font-size="14" font-weight="bold" font-family="'Comic Sans MS','Comic Neue',cursive">0 KM/H ✓</text>
         </g>
       </svg>
-      <div class="jt-verdict">MATCHES REALITY! ✅</div>
+      <div class="jt-verdict" data-step="5">MATCHES REALITY! ✅</div>
     </div>
   </div>
-  <div class="jt-bottom-text">🏆 FLAT EARTH CONFIRMED 🏆</div>
+  <div class="jt-bottom-text" data-step="6">🏆 FLAT EARTH CONFIRMED 🏆</div>
 </div>
 
 <!-- ═══ NAV ═══ -->
 <div class="slide-counter" id="counter">1 / 2</div>
-<div class="nav-hint">← →  or click to navigate</div>
+<div class="nav-hint">→ to advance</div>
 
 <script>
+  // ── Step-based presentation engine ──
+  // Each slide has N steps. Arrow right reveals next step; when all steps
+  // are shown, the next press advances to the next slide.
+  // Arrow left goes to previous slide (fully revealed).
+
   const slides = document.querySelectorAll('.slide');
-  let current = 0;
+  let currentSlide = 0;
+  let currentStep = 0;
   const total = slides.length;
 
-  function show(n) {
-    slides[current].classList.remove('active');
-    current = (n + total) % total;
-    slides[current].classList.add('active');
-    document.getElementById('counter').textContent = `${current + 1} / ${total}`;
+  // Count max steps per slide
+  function getMaxStep(slideEl) {
+    let max = 0;
+    slideEl.querySelectorAll('[data-step]').forEach(el => {
+      max = Math.max(max, parseInt(el.dataset.step));
+    });
+    return max;
+  }
+
+  // Reveal all steps up to `step` on a slide
+  function revealUpTo(slideEl, step) {
+    slideEl.querySelectorAll('[data-step]').forEach(el => {
+      const s = parseInt(el.dataset.step);
+      if (s <= step) el.classList.add('revealed');
+      else el.classList.remove('revealed');
+    });
+  }
+
+  // Custom step handlers for SVG animations (slide 2)
+  const stepHandlers = {
+    // slide index 1 (jump test), step 4 = trigger jump animation
+    '1-4': function() {
+      // trigger all SMIL animations
+      ['groundMove','leftJump','mouthAnim','armL1','armL2','armR1','armR2','legL','legR','rightJump']
+        .forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.beginElement();
+        });
+      // show speed indicators
+      document.getElementById('leftSpeed').classList.add('revealed');
+      document.getElementById('rightSpeed').classList.add('revealed');
+      // show arrow after animation
+      document.getElementById('leftArrow').classList.add('revealed');
+    },
+    // slide index 1, step 5 = show results
+    '1-5': function() {
+      document.getElementById('leftLanding').classList.add('revealed');
+      document.getElementById('rightLanding').classList.add('revealed');
+    }
+  };
+
+  function showSlide(n, revealAll) {
+    slides[currentSlide].classList.remove('active');
+    // reset previous slide
+    revealUpTo(slides[currentSlide], 0);
+    resetSvgSteps(slides[currentSlide]);
+
+    currentSlide = ((n % total) + total) % total;
+    const slide = slides[currentSlide];
+    slide.classList.add('active');
+
+    if (revealAll) {
+      const max = getMaxStep(slide);
+      currentStep = max;
+      revealUpTo(slide, max);
+      // fire all handlers for this slide
+      for (let s = 1; s <= max; s++) {
+        const handler = stepHandlers[`${currentSlide}-${s}`];
+        if (handler) handler();
+      }
+    } else {
+      currentStep = 0;
+      revealUpTo(slide, 0);
+    }
+    updateCounter();
+  }
+
+  function resetSvgSteps(slideEl) {
+    slideEl.querySelectorAll('.svg-step').forEach(el => el.classList.remove('revealed'));
+  }
+
+  function advance() {
+    const slide = slides[currentSlide];
+    const maxStep = getMaxStep(slide);
+    if (currentStep < maxStep) {
+      currentStep++;
+      revealUpTo(slide, currentStep);
+      const handler = stepHandlers[`${currentSlide}-${currentStep}`];
+      if (handler) handler();
+    } else {
+      showSlide(currentSlide + 1, false);
+    }
+    updateCounter();
+  }
+
+  function goBack() {
+    if (currentStep > 0) {
+      // undo current step
+      const slide = slides[currentSlide];
+      // hide svg steps for current step
+      if (currentSlide === 1 && currentStep === 4) {
+        document.getElementById('leftSpeed').classList.remove('revealed');
+        document.getElementById('rightSpeed').classList.remove('revealed');
+        document.getElementById('leftArrow').classList.remove('revealed');
+      }
+      if (currentSlide === 1 && currentStep === 5) {
+        document.getElementById('leftLanding').classList.remove('revealed');
+        document.getElementById('rightLanding').classList.remove('revealed');
+      }
+      currentStep--;
+      revealUpTo(slide, currentStep);
+      updateCounter();
+    } else {
+      showSlide(currentSlide - 1, true);
+    }
+  }
+
+  function updateCounter() {
+    const max = getMaxStep(slides[currentSlide]);
+    document.getElementById('counter').textContent =
+      `${currentSlide + 1}/${total}  step ${currentStep}/${max}`;
   }
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' || e.key === ' ') show(current + 1);
-    if (e.key === 'ArrowLeft') show(current - 1);
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); advance(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goBack(); }
   });
 
-  // click right half → next, left half → prev
   document.addEventListener('click', e => {
-    if (e.clientX > window.innerWidth / 2) show(current + 1);
-    else show(current - 1);
+    if (e.clientX > window.innerWidth / 2) advance();
+    else goBack();
   });
+
+  updateCounter();
 </script>
 </body>
 </html>
