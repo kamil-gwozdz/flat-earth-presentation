@@ -2182,6 +2182,10 @@
 
   mobileMQ.addEventListener('change', applyMobileScale);
   window.addEventListener('resize', applyMobileScale);
+  window.addEventListener('orientationchange', () => {
+    // Viewport dimensions update async on some mobile browsers
+    setTimeout(applyMobileScale, 150);
+  });
   applyMobileScale();
 
   // Ensure keyboard works immediately on page load
