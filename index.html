@@ -201,6 +201,12 @@
     margin-top: 12px;
     font-weight: 900;
     letter-spacing: 3px;
+    opacity: 0;
+    animation: verdictReveal 0.5s ease-out 5.5s forwards;
+  }
+  @keyframes verdictReveal {
+    from { opacity: 0; transform: scale(2); }
+    to { opacity: 1; transform: scale(1); }
   }
   .jt-panel.left .jt-verdict { color: #ff4444; }
   .jt-panel.right .jt-verdict { color: #44ff44; }
@@ -208,15 +214,19 @@
     font-size: 0.85em;
     color: #ff9900;
     margin-top: 4px;
-    animation: blink 1s step-end infinite;
+    opacity: 0;
+    animation: fadeIn 0.3s ease-out 6s forwards, blink 1s step-end 6s infinite;
   }
   @keyframes blink { 50% { opacity: 0; } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   .jt-bottom-text {
     font-size: 1.5em;
     color: #ffcc00;
     padding: 10px;
     text-shadow: 0 0 15px #ffcc0088;
     letter-spacing: 3px;
+    opacity: 0;
+    animation: verdictReveal 0.8s ease-out 6.5s forwards;
   }
   /* hide animated elements until slide is active, then restart */
   .slide-2 svg { }
