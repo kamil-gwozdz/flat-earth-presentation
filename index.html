@@ -670,9 +670,16 @@
     .mobile-nav { display: block; }
     .nav-hint { display: none; }
   }
-  @media (max-width: 1024px) and (hover: none) and (orientation: portrait) {
+  /* Portrait warning — trigger on any narrow portrait screen (touch or not) */
+  @media (max-width: 1024px) and (orientation: portrait) {
     .rotate-warning { display: flex !important; }
-    .slide { display: none !important; }
+    .slide.active { display: none !important; }
+    .slide-counter, .nav-hint, .mobile-nav { display: none !important; }
+  }
+  /* Also catch square-ish / tall viewports on touch devices */
+  @media (max-aspect-ratio: 1/1) and (max-width: 1024px) {
+    .rotate-warning { display: flex !important; }
+    .slide.active { display: none !important; }
     .slide-counter, .nav-hint, .mobile-nav { display: none !important; }
   }
 
