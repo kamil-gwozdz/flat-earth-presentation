@@ -250,6 +250,102 @@
     animation: verdictPop 0.6s ease-out;
   }
 
+  /* ══════════════════════════════════════
+     SLIDE — SPEED CALCULATION
+     ══════════════════════════════════════ */
+  .slide-calc {
+    background: #0a0a2e;
+  }
+  .slide-calc h2 {
+    font-size: 2em;
+    color: #ff4444;
+    text-shadow: 0 0 20px #ff4444aa;
+    margin-bottom: 20px;
+  }
+  .slide-calc h2.revealed {
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .calc-layout {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+    justify-content: center;
+  }
+  .calc-earth {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    flex-shrink: 0;
+  }
+  .calc-formulas {
+    max-width: 480px;
+  }
+  .formula-block {
+    margin-bottom: 24px;
+    padding: 16px 24px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.05);
+    border-left: 4px solid #ffcc00;
+  }
+  .formula-block.berlin {
+    border-left-color: #44aaff;
+  }
+  .formula-label {
+    font-size: 0.85em;
+    color: #aaa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .formula-math {
+    font-size: 1.2em;
+    color: #ffcc00;
+    margin-bottom: 4px;
+  }
+  .formula-math.berlin-color { color: #44aaff; }
+  .formula-result {
+    font-size: 1.8em;
+    font-weight: 900;
+    margin-top: 4px;
+  }
+  .formula-result.equator { color: #ffcc00; }
+  .formula-result.berlin { color: #44aaff; }
+  .formula-note {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 4px;
+  }
+  .scary-comparison {
+    margin-top: 16px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    background: rgba(255,68,68,0.15);
+    border: 2px solid #ff4444;
+    text-align: center;
+  }
+  .scary-comparison .big {
+    font-size: 1.4em;
+    font-weight: 900;
+    color: #ff4444;
+  }
+  .scary-comparison .sub {
+    font-size: 0.85em;
+    color: #ff8888;
+    margin-top: 4px;
+  }
+  /* spinning earth */
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .earth-spinner {
+    animation: spin 8s linear infinite;
+    transform-origin: center center;
+  }
+  .earth-spinner.paused {
+    animation-play-state: paused;
+  }
+
 </style>
 </head>
 <body>
@@ -281,8 +377,92 @@
   </div>
 </div>
 
-<!-- ═══ SLIDE 2: JUMP TEST ═══ -->
-<div class="slide slide-2" data-slide="2">
+<!-- ═══ SLIDE 2: SPEED CALCULATION ═══ -->
+<div class="slide slide-calc" data-slide="2">
+  <h2 data-step="1">🌍 How Fast Is Earth "Supposedly" Spinning?</h2>
+
+  <div class="calc-layout">
+    <!-- Spinning Earth SVG -->
+    <div class="calc-earth" data-step="2">
+      <svg viewBox="0 0 320 320" width="320" height="320">
+        <defs>
+          <clipPath id="earthClip"><circle cx="160" cy="160" r="120"/></clipPath>
+          <radialGradient id="earthShade" cx="40%" cy="35%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.15)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0.4)"/>
+          </radialGradient>
+        </defs>
+        <!-- earth body -->
+        <g class="earth-spinner paused" id="earthSpin">
+          <circle cx="160" cy="160" r="120" fill="#1a5599"/>
+          <!-- continents (simplified) -->
+          <g clip-path="url(#earthClip)" opacity="0.9">
+            <!-- Americas -->
+            <ellipse cx="100" cy="130" rx="30" ry="50" fill="#2d8a4e" transform="rotate(-10,100,130)"/>
+            <ellipse cx="110" cy="200" rx="20" ry="35" fill="#2d8a4e" transform="rotate(15,110,200)"/>
+            <!-- Europe/Africa -->
+            <ellipse cx="190" cy="120" rx="18" ry="25" fill="#2d8a4e" transform="rotate(5,190,120)"/>
+            <ellipse cx="195" cy="180" rx="22" ry="40" fill="#2d8a4e"/>
+            <!-- Asia -->
+            <ellipse cx="240" cy="115" rx="35" ry="30" fill="#2d8a4e" transform="rotate(-5,240,115)"/>
+            <!-- Australia -->
+            <ellipse cx="260" cy="210" rx="15" ry="10" fill="#2d8a4e"/>
+          </g>
+        </g>
+        <!-- shading overlay (static) -->
+        <circle cx="160" cy="160" r="120" fill="url(#earthShade)"/>
+        <!-- equator line -->
+        <ellipse cx="160" cy="160" rx="120" ry="20" fill="none" stroke="#ffcc0088" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <!-- Berlin latitude line (~52.5°N) -->
+        <ellipse cx="160" cy="105" rx="73" ry="12" fill="none" stroke="#44aaff88" stroke-width="1.5" stroke-dasharray="6,4" class="svg-step" id="berlinLatLine"/>
+        <!-- labels -->
+        <text x="295" y="163" fill="#ffcc00" font-size="11" font-family="'Comic Sans MS','Comic Neue',cursive" font-weight="bold">Equator</text>
+        <text x="245" y="100" fill="#44aaff" font-size="11" font-family="'Comic Sans MS','Comic Neue',cursive" font-weight="bold" class="svg-step" id="berlinLatLabel">Berlin 52.5°N</text>
+        <!-- radius arrow -->
+        <line x1="160" y1="160" x2="280" y2="160" stroke="#ffcc0066" stroke-width="1.5" stroke-dasharray="4"/>
+        <text x="215" y="150" fill="#ffcc0088" font-size="10" font-family="'Comic Sans MS','Comic Neue',cursive">r = 6,371 km</text>
+        <!-- spin arrow -->
+        <g id="spinArrowG" class="svg-step">
+          <path d="M 130,32 A 135,135 0 0 1 230,50" fill="none" stroke="#ff666688" stroke-width="2"/>
+          <polygon points="230,44 230,56 242,50" fill="#ff666688"/>
+          <text x="160" y="25" text-anchor="middle" fill="#ff6666" font-size="11" font-family="'Comic Sans MS','Comic Neue',cursive">1 rotation / 24h</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Formulas -->
+    <div class="calc-formulas">
+      <div class="formula-block" data-step="3">
+        <div class="formula-label">📐 At the Equator</div>
+        <div class="formula-math">C = 2 × π × 6,371 km</div>
+        <div class="formula-math">C = 40,030 km</div>
+        <div class="formula-math">Speed = 40,030 ÷ 24h</div>
+        <div class="formula-result equator">= 1,668 km/h 🤯</div>
+        <div class="formula-note">That's Mach 1.36 — faster than the speed of sound!</div>
+      </div>
+
+      <div class="formula-block berlin" data-step="4">
+        <div class="formula-label">🇩🇪 At Berlin (52.5°N)</div>
+        <div class="formula-math berlin-color">C = 40,030 × cos(52.5°)</div>
+        <div class="formula-math berlin-color">C = 40,030 × 0.6088 = 24,370 km</div>
+        <div class="formula-math berlin-color">Speed = 24,370 ÷ 24h</div>
+        <div class="formula-result berlin">= 1,015 km/h 😱</div>
+        <div class="formula-note">Still faster than a commercial airplane (900 km/h)!</div>
+      </div>
+
+      <div class="scary-comparison" data-step="5">
+        <div class="big">⚠️ THINK ABOUT THIS ⚠️</div>
+        <div class="sub">
+          You're "supposedly" moving at 1,015 km/h RIGHT NOW<br>
+          sitting in your chair... and you feel NOTHING?!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 3: JUMP TEST ═══ -->
+<div class="slide slide-2" data-slide="3">
   <h2 data-step="1">⚠️ The Jump Test ⚠️</h2>
   <div class="jt-subtitle" data-step="2">IF EARTH SPINS AT 1,670 KM/H...</div>
   <div class="jt-container" data-step="3">
@@ -441,24 +621,31 @@
     });
   }
 
-  // Custom step handlers for SVG animations (slide 2)
+  // Custom step handlers for SVG animations
   const stepHandlers = {
-    // slide index 1 (jump test), step 4 = trigger jump animation
+    // slide index 1 (speed calc), step 2 = start earth spinning
+    '1-2': function() {
+      document.getElementById('earthSpin').classList.remove('paused');
+      document.getElementById('spinArrowG').classList.add('revealed');
+    },
+    // slide index 1, step 4 = show berlin latitude line
     '1-4': function() {
-      // trigger all SMIL animations
+      document.getElementById('berlinLatLine').classList.add('revealed');
+      document.getElementById('berlinLatLabel').classList.add('revealed');
+    },
+    // slide index 2 (jump test), step 4 = trigger jump animation
+    '2-4': function() {
       ['groundMove','leftJump','mouthAnim','armL1','armL2','armR1','armR2','legL','legR','rightJump']
         .forEach(id => {
           const el = document.getElementById(id);
           if (el) el.beginElement();
         });
-      // show speed indicators
       document.getElementById('leftSpeed').classList.add('revealed');
       document.getElementById('rightSpeed').classList.add('revealed');
-      // show arrow after animation
       document.getElementById('leftArrow').classList.add('revealed');
     },
-    // slide index 1, step 5 = show results
-    '1-5': function() {
+    // slide index 2, step 5 = show results
+    '2-5': function() {
       document.getElementById('leftLanding').classList.add('revealed');
       document.getElementById('rightLanding').classList.add('revealed');
     }
@@ -510,15 +697,23 @@
 
   function goBack() {
     if (currentStep > 0) {
-      // undo current step
       const slide = slides[currentSlide];
-      // hide svg steps for current step
+      // undo svg steps for calc slide
+      if (currentSlide === 1 && currentStep === 2) {
+        document.getElementById('earthSpin').classList.add('paused');
+        document.getElementById('spinArrowG').classList.remove('revealed');
+      }
       if (currentSlide === 1 && currentStep === 4) {
+        document.getElementById('berlinLatLine').classList.remove('revealed');
+        document.getElementById('berlinLatLabel').classList.remove('revealed');
+      }
+      // undo svg steps for jump test slide
+      if (currentSlide === 2 && currentStep === 4) {
         document.getElementById('leftSpeed').classList.remove('revealed');
         document.getElementById('rightSpeed').classList.remove('revealed');
         document.getElementById('leftArrow').classList.remove('revealed');
       }
-      if (currentSlide === 1 && currentStep === 5) {
+      if (currentSlide === 2 && currentStep === 5) {
         document.getElementById('leftLanding').classList.remove('revealed');
         document.getElementById('rightLanding').classList.remove('revealed');
       }
