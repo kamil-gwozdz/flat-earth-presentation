@@ -375,6 +375,47 @@
   .evidence-grid .evidence-card.red { border-top-color: #ff4444; }
   .evidence-grid .evidence-card.blue { border-top-color: #44aaff; }
   .evidence-grid .evidence-card.green { border-top-color: #44ff44; }
+
+  /* UN flag zoom/morph overlay */
+  .un-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .un-overlay.active { opacity: 1; }
+  .un-overlay .un-zoom-container {
+    position: relative;
+    width: 160px;
+    height: 107px;
+    transition: width 0.8s ease, height 0.8s ease;
+  }
+  .un-overlay.zoomed .un-zoom-container {
+    width: 420px;
+    height: 420px;
+  }
+  .un-overlay .un-zoom-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    transition: opacity 0.8s ease;
+  }
+  .un-overlay.morphed .un-zoom-img { opacity: 0; }
+  .un-overlay .un-flat-earth {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.2s;
+  }
+  .un-overlay.morphed .un-flat-earth { opacity: 1; }
   .route-table {
     width: 100%;
     max-width: 900px;
@@ -1005,19 +1046,19 @@
   <div class="evidence-grid">
     <div class="evidence-card red" data-step="3" style="text-align:center">
       <h3 style="color:#ff4444">🇺🇳 The UN Flag</h3>
-      <div style="margin:12px 0"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Flag_of_the_United_Nations.svg/800px-Flag_of_the_United_Nations.svg.png" alt="UN Flag" style="width:160px;border-radius:8px;border:2px solid #44aaff44"></div>
+      <div style="margin:12px 0"><img id="unFlagImg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Flag_of_the_United_Nations.svg/800px-Flag_of_the_United_Nations.svg.png" alt="UN Flag" style="width:160px;border-radius:8px;border:2px solid #44aaff44"></div>
       <p>The United Nations flag is <span class="highlight-red">literally a flat earth map</span> — an azimuthal equidistant projection.</p>
       <p style="margin-top:8px;color:#ff8888;font-size:0.85em">193 countries agreed on THIS specific map. Coincidence? 🤔</p>
     </div>
 
-    <div class="evidence-card blue" data-step="4" style="text-align:center">
+    <div class="evidence-card blue" data-step="6" style="text-align:center">
       <h3 style="color:#44aaff">🧊 The Antarctic Treaty</h3>
       <div style="font-size:4em;margin:12px 0">🚫</div>
       <p><span class="highlight-blue">54 nations</span> — who agree on NOTHING else — all signed a treaty preventing free exploration of Antarctica.</p>
       <p style="margin-top:8px;color:#88aaff;font-size:0.85em">What are they guarding? The ice wall edge. 🧊</p>
     </div>
 
-    <div class="evidence-card green" data-step="5" style="text-align:center">
+    <div class="evidence-card green" data-step="7" style="text-align:center">
       <h3 style="color:#44ff44">🔤 NASA = "To Deceive"</h3>
       <div style="font-size:4em;margin:12px 0">🐍</div>
       <p>In Hebrew, "נשא" (nasa) means <span class="highlight">"to deceive"</span>.</p>
@@ -1025,7 +1066,54 @@
     </div>
   </div>
 
-  <div class="conclusion-banner gold" data-step="6">Hidden in plain sight. Open your eyes. 👁️</div>
+  <div class="conclusion-banner gold" data-step="8">Hidden in plain sight. Open your eyes. 👁️</div>
+</div>
+
+<!-- UN Flag zoom/morph overlay (lives outside slides so it's above everything) -->
+<div class="un-overlay" id="unOverlay">
+  <div class="un-zoom-container">
+    <img class="un-zoom-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Flag_of_the_United_Nations.svg/800px-Flag_of_the_United_Nations.svg.png" alt="UN Flag zoomed">
+    <svg class="un-flat-earth" viewBox="0 0 420 420">
+      <defs>
+        <radialGradient id="unFlatGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1a4466"/>
+          <stop offset="80%" stop-color="#0d2840"/>
+          <stop offset="100%" stop-color="#091e30"/>
+        </radialGradient>
+      </defs>
+      <!-- Ice wall -->
+      <circle cx="210" cy="210" r="195" fill="none" stroke="#aaddff" stroke-width="12" opacity="0.25"/>
+      <!-- Ocean -->
+      <circle cx="210" cy="210" r="188" fill="url(#unFlatGrad)" stroke="#44aaff" stroke-width="1.5"/>
+      <!-- Grid -->
+      <circle cx="210" cy="210" r="40" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+      <circle cx="210" cy="210" r="80" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+      <circle cx="210" cy="210" r="120" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" stroke-dasharray="4,4"/>
+      <circle cx="210" cy="210" r="155" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" stroke-dasharray="3,5"/>
+      <line x1="210" y1="22" x2="210" y2="398" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+      <line x1="22" y1="210" x2="398" y2="210" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+      <!-- Continents -->
+      <ellipse cx="164" cy="198" rx="28" ry="22" fill="#2d8a4e" opacity="0.6"/>
+      <text x="164" y="202" text-anchor="middle" fill="#fff" font-size="8" font-family="'Comic Sans MS',cursive">N.America</text>
+      <path d="M118,235 Q108,252 112,275 Q118,292 128,284 Q132,262 126,242Z" fill="#2d8a4e" opacity="0.6"/>
+      <text x="106" y="262" text-anchor="middle" fill="#fff" font-size="7" font-family="'Comic Sans MS',cursive">S.Am</text>
+      <ellipse cx="218" cy="242" rx="12" ry="9" fill="#2d8a4e" opacity="0.5"/>
+      <text x="218" y="245" text-anchor="middle" fill="#fff" font-size="6" font-family="'Comic Sans MS',cursive">EU</text>
+      <ellipse cx="248" cy="285" rx="15" ry="24" fill="#2d8a4e" opacity="0.55"/>
+      <text x="248" y="289" text-anchor="middle" fill="#fff" font-size="7" font-family="'Comic Sans MS',cursive">Africa</text>
+      <ellipse cx="260" cy="208" rx="30" ry="17" fill="#2d8a4e" opacity="0.5"/>
+      <text x="260" y="212" text-anchor="middle" fill="#fff" font-size="7" font-family="'Comic Sans MS',cursive">Asia</text>
+      <ellipse cx="288" cy="128" rx="18" ry="12" fill="#2d8a4e" opacity="0.65"/>
+      <text x="288" y="132" text-anchor="middle" fill="#fff" font-size="7" font-family="'Comic Sans MS',cursive">Australia</text>
+      <!-- North Pole -->
+      <circle cx="210" cy="210" r="4" fill="#fff" opacity="0.7"/>
+      <text x="210" y="200" text-anchor="middle" fill="#fff" font-size="9" font-family="'Comic Sans MS',cursive" opacity="0.6">N. Pole</text>
+      <!-- Antarctica -->
+      <text x="210" y="404" text-anchor="middle" fill="#aaddff" font-size="9" font-family="'Comic Sans MS',cursive" font-weight="bold">🧊 ICE WALL 🧊</text>
+      <!-- Label -->
+      <text x="210" y="30" text-anchor="middle" fill="#ff4444" font-size="14" font-family="'Comic Sans MS',cursive" font-weight="bold">Same. Map. 🤯</text>
+    </svg>
+  </div>
 </div>
 
 <!-- ═══ SLIDE 9: FLIGHT PATHS ═══ -->
@@ -1461,6 +1549,19 @@
         document.getElementById('intoSpaceLabel').classList.add('revealed');
       }, 3200);
     },
+    // slide 7 (institutional proof), step 4 = zoom UN flag, step 5 = morph to flat earth
+    '7-4': function() {
+      const o = document.getElementById('unOverlay');
+      o.classList.add('active');
+      setTimeout(() => o.classList.add('zoomed'), 50);
+    },
+    '7-5': function() {
+      document.getElementById('unOverlay').classList.add('morphed');
+    },
+    '7-6': function() {
+      const o = document.getElementById('unOverlay');
+      o.classList.remove('active','zoomed','morphed');
+    },
     // slide 8 (flight paths), step 4 = show expected route on globe
     '8-4': function() {
       ['fpExpected1','fpExpLabel1'].forEach(id => document.getElementById(id).classList.add('revealed'));
@@ -1515,6 +1616,8 @@
 
   function resetSvgSteps(slideEl) {
     slideEl.querySelectorAll('.svg-step').forEach(el => el.classList.remove('revealed'));
+    // Always hide UN overlay when leaving its slide
+    document.getElementById('unOverlay').classList.remove('active','zoomed','morphed');
   }
 
   function advance() {
@@ -1561,6 +1664,17 @@
       if (currentSlide === 6 && currentStep === 3) {
         document.getElementById('intoSpaceLabel').classList.remove('revealed');
         document.getElementById('altitudeLines').classList.remove('revealed');
+      }
+      if (currentSlide === 7 && currentStep === 4) {
+        document.getElementById('unOverlay').classList.remove('active','zoomed','morphed');
+      }
+      if (currentSlide === 7 && currentStep === 5) {
+        document.getElementById('unOverlay').classList.remove('morphed');
+      }
+      if (currentSlide === 7 && currentStep === 6) {
+        // re-show the overlay in morphed state when going back to step 5
+        const o = document.getElementById('unOverlay');
+        o.classList.add('active','zoomed','morphed');
       }
       if (currentSlide === 8 && currentStep === 4) {
         ['fpExpected1','fpExpLabel1'].forEach(id => document.getElementById(id).classList.remove('revealed'));
